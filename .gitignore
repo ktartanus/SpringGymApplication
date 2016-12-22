@@ -211,3 +211,5 @@ SpringGymApplication/target/gym-0.1.0/WEB-INF/lib/xml-apis-1.0.b2.jar
 SpringGymApplication/target/maven-archiver/pom.properties
 SpringGymApplication/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
 SpringGymApplication/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+SpringGymApplication/target/
+SpringGymApplication/.idea/

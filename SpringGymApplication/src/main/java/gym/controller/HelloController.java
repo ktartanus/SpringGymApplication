@@ -31,8 +31,4 @@ public class HelloController {
         return "user/index";
     }
 
-    @RequestMapping("/indexRogal")
-    public String indRogal() {
-        return "indexRogal";
-    }
 }

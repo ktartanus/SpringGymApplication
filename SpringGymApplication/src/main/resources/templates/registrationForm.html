@@ -3,34 +3,53 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Spring Security Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"  type="text/css"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <link href="../static/css/style.css"
+          th:href="@{css/style.css}" rel="stylesheet" media="screen" type="text/css"/>
 </head>
-<body>
-<form action="#" th:action="@{/registration}" th:object="${registrationDTO}" method="post">
-    <table>
-        <tr>
-            <td>Name:</td>
-            <td><input type="text" th:field="*{accountName}" /></td>
-            <td th:if="${#fields.hasErrors('accountName')}" th:errors="*{accountName}">Name Error</td>
-        </tr>
-        <tr>
-            <td>Email:</td>
-            <td><input type="text" th:field="*{email}" /></td>
-            <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Age Error</td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type="password" th:field="*{password}" /></td>
-            <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Age Error</td>
-        </tr>
-        <tr>
-            <td>Password-repeat:</td>
-            <td><input type="password" th:field="*{passwordRepeat}" /></td>
-            <td th:if="${#fields.hasErrors('passwordRepeat')}" th:errors="*{passwordRepeat}">Age Error</td>
-        </tr>
-        <tr>
-            <td><button type="submit">Submit</button></td>
-        </tr>
-    </table>
-</form>
+<body id="registration">
+<div class="container">
+        <div class="col-xs-offset-4 col-xs-4 ">
+                <div class="row ">
+                    <div class="col-xs-offset-2 col-xs-8 registrationForm" >
+                            <form class="form-inline" action="#" th:action="@{/registration}" th:object="${registrationDTO}" method="post">
+                                <div class="form-group">
+                                    <label class="col-xs-12" for="acountName">Account name :</label>
+                                    <input type="text"  th:field="*{accountName}" class="form-control" id="acountName" />
+                                </div>
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('accountName')}" th:errors="*{accountName}">Name Error</div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-12" for="email">Email address:</label>
+                                    <input type="email" th:field="*{email}" class="form-control col-xs-12" id="email" />
+                                </div>
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-12" for="pwd">Password:</label>
+                                    <input  type="password" th:field="*{password}" class="form-control col-xs-12" id="pwd" />
+                                </div>
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-12" for="pwdRepeat">Repeat password:</label>
+                                    <input  type="password" th:field="*{passwordRepeat}" class="form-control col-xs-12" id="pwdRepeat" />
+                                </div>
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('global')}" th:errors="*{global}">Missmatch password</div>
+
+                                <button type="submit" class="btn btn-default .btn-lg ">Submit</button>
+                                <button type="reset" class="btn btn-default .btn-lg ">Reset</button>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        </div>
 </body>
 </html>

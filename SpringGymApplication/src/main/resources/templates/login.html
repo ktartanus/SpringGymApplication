@@ -1,22 +1,48 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Spring Security Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"  type="text/css"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <link href="../static/css/style.css"
+          th:href="@{css/style.css}" rel="stylesheet" media="screen" type="text/css"/>
 </head>
-<body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
+<body id="login">
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
-<button><a href="/registration" th:href="@{/registration}">Sign Up</a></button>
+<div class="container">
+    <div class="col-xs-offset-4 col-xs-4 ">
+        <div class="row ">
+            <div class="col-xs-offset-2 col-xs-8 loginForm" >
+                <form class="form-inline" action="#" th:action="@{/login}" method="post">
+                    <div class="form-group">
+                        <label class="col-xs-12" for="username"> Username </label>
+                            <input type="text" class="form-control col-xs-12" id="username" name="username"/>
+                    </div>
 
+                    <div class="form-group">
+                        <label  class="col-xs-12" for="password"> Password </label>
+                            <input type="password" class="form-control col-xs-12" name="password" id="password"/>
+                    </div>
+                    <div class="alert alert-danger" th:if="${param.error}">
+                        Wrong username or password.
+                    </div>
+
+                    <button type="submit" class="btn btn-default .btn-lg">Sign In</button>
+                    <a  class="btn btn-default .btn-lg" href="/registration" th:href="@{/registration}">Sign Up</a>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

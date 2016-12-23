@@ -1,10 +1,73 @@
-body{
-    padding-top: 70px;
-    background: url('../images/sil.jpg') no-repeat center center fixed;
+/*registration form*/
+body#login, body#registration{
+    background: url('../images/bg1.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    color: black;
+    font-size: 16px;
+}
+
+#registration input, #login input {
+    margin: auto;
+    width:100%;
+    font-size: 16px;
+    -webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+    transition: all 0.1s linear;
+}
+
+#registration .registrationForm{
+    background: black;
+    margin-top:75px;
     color: white;
-    font-size: 20px;
+    border-radius: 10px;
+}
+#registration form{
+    margin:auto;
+}
+#registration button[type="submit"]{
+    background: black;
+    color: white;
+    float: left;
+}
+
+#registration button[type="reset"]{
+    background: black;
+    color: white;
+    float: right;
+}
+/*login form*/
+#login .loginForm{
+    background: black;
+    margin-top:75px;
+    color: white;
+    border-radius: 10px;
+}
+#login form{
+    margin:auto;
+}
+
+#login button[type="submit"]{
+    background: black;
+    color: white;
+    float: left;
+}
+
+#login a{
+    background: black;
+    color: white;
+    float: right;
+}
+
+.alert-danger {
+    background: #ce110e;
+    color: white;
+    border-color: black;
+}
+
+.alert{
+    font-size: small;
+    padding: 5px;
 }

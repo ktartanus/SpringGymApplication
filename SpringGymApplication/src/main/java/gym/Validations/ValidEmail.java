@@ -1,4 +1,4 @@
-package gym.Validations;
+package gym.validations;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;

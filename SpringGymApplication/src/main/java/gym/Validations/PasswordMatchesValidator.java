@@ -1,4 +1,4 @@
-package gym.Validations;
+package gym.validations;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

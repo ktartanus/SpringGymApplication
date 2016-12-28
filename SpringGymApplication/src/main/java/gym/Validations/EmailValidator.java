@@ -1,4 +1,4 @@
-package gym.Validations;
+package gym.validations;
 
 
         import java.util.regex.Matcher;

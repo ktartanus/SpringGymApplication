@@ -1,4 +1,4 @@
-package gym.Validations;
+package gym.validations;
 
 @SuppressWarnings("serial")
 public class EmailExistsException extends Throwable {

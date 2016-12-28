@@ -1,14 +1,11 @@
 package gym.dto;
 
 
-import gym.Validations.PasswordMatches;
-import gym.Validations.ValidEmail;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
+import gym.validations.PasswordMatches;
+import gym.validations.ValidEmail;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**

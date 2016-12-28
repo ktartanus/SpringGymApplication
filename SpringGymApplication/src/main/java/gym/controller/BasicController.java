@@ -4,12 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HelloController {
-    
-    @RequestMapping("/fckMyLife")
-    public String index() {
-        return "Greetings from Spring Boot Noob!";
-    }
+public class BasicController {
 
     @RequestMapping("/")
     public String empty() {

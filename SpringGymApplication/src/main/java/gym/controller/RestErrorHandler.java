@@ -28,8 +28,7 @@ public class RestErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ValidationErrorDTO processValidationError(MethodArgumentNotValidException ex) {
-/// dodaje komentarz zeby wiedziec skad zaczac
-        //
+
         BindingResult result = ex.getBindingResult();
         List<FieldError> fieldErrors = result.getFieldErrors();
         List<ObjectError> globalErrors = result.getGlobalErrors();

@@ -14,21 +14,20 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Tarti on 2016-12-29.
- */
-
 @Service
 public class TrainingService implements ITrainingService {
 
-    @Autowired
     private IUserService userService;
 
-    @Autowired
     private TrainingRepository trainingRepository;
 
+    @Autowired
+    public TrainingService(IUserService userService, TrainingRepository trainingRepository){
+        this.userService = userService;
+        this.trainingRepository = trainingRepository;
+    }
+
     public Training addTraining(TrainingDTO trainingDTO){
-        System.out.println("wenatrz addTraining w TrainingService");
         User loggedUser = userService.getLoggedUser();
 
         Training newTraining = createTraining(trainingDTO, loggedUser);

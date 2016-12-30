@@ -22,13 +22,19 @@ import javax.transaction.Transactional;
 public class UserService implements IUserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RestErrorHandler.class);
 
-    @Autowired
+
     private UserRepository userRepository;
-    @Autowired
+
     private UserRolesRepository userRolesRepository;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserService(UserRepository userRepository, UserRolesRepository userRolesRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.userRolesRepository = userRolesRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Transactional
     @Override
@@ -58,17 +64,11 @@ public class UserService implements IUserService {
     }
     private boolean emailExist(String email) {
         User user = userRepository.findByEmail(email);
-        if (user != null) {
-            return true;
-        }
-        return false;
+        return user != null;
     }
     private boolean userNameExist(String name){
         User user = userRepository.findByUserName(name);
-        if (user != null) {
-            return true;
-        }
-        return false;
+        return user != null;
     }
 
     public User getLoggedUser(){

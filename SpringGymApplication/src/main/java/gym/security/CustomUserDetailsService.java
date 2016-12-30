@@ -1,6 +1,5 @@
 package gym.security;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import gym.model.enums.Role;
@@ -25,8 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService{
         this.userRepository = userRepository;
         this.userRolesRepository=userRolesRepository;
     }
-	
-        
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user=userRepository.findByUserName(username);

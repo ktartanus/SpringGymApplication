@@ -8,9 +8,6 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Date;
 
-/**
- * Created by Tarti on 2016-12-30.
- */
 public class VStatusValidator implements ConstraintValidator<VStatus, Object> {
 
 

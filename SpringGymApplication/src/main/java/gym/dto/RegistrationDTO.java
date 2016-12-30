@@ -8,9 +8,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- * Created by Tarti on 2016-12-22.
- */
 @VPasswordMatches
 public class RegistrationDTO {
 

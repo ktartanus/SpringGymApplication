@@ -1,8 +1,5 @@
 package gym.validations;
 
-/**
- * Created by Tarti on 2016-12-30.
- */
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

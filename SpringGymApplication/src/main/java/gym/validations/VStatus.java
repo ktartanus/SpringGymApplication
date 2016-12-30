@@ -10,20 +10,16 @@ import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-/**
- * Created by Tarti on 2016-12-30.
- */
+@Target({ TYPE, ANNOTATION_TYPE })
+@Retention(RUNTIME)
+@Constraint(validatedBy = VStatusValidator.class)
+@Documented
+public @interface VStatus {
 
-    @Target({ TYPE, ANNOTATION_TYPE })
-    @Retention(RUNTIME)
-    @Constraint(validatedBy = VStatusValidator.class)
-    @Documented
-    public @interface VStatus {
+    String message() default "Invalid VStatus";
 
-        String message() default "Invalid VStatus";
+    Class<?>[] groups() default {};
 
-        Class<?>[] groups() default {};
-
-        Class<? extends Payload>[] payload() default {};
-    }
+    Class<? extends Payload>[] payload() default {};
+}
 

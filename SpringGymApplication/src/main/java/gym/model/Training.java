@@ -7,11 +7,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by Tarti on 2016-12-29.
- */
-
-
 @Entity
 @Table(name = "TRAINING")
 public class Training implements Serializable{

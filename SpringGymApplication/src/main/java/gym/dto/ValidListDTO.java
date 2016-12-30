@@ -3,9 +3,6 @@ package gym.dto;
 import javax.validation.Valid;
 import java.util.*;
 
-/**
- * Created by Tarti on 2016-12-28.
- */
 public class ValidListDTO<E> implements List<E> {
 
         @Valid
@@ -26,8 +23,6 @@ public class ValidListDTO<E> implements List<E> {
         public void setList(List<E> list) {
             this.list = list;
         }
-
-        // List-like methods, used by JSON parsing but ignored by javax.validation
 
         @Override
         public int size() {

@@ -1,8 +1,5 @@
 package gym.validations;
 
-/**
- * Created by Tarti on 2016-12-30.
- */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,16 +8,13 @@ import javax.validation.ConstraintValidatorContext;
 
 public class VEnumValidator implements ConstraintValidator<VEnum, String> {
 
-    List<String> valueList = null;
+    private List<String> valueList = null;
 
 
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if(!valueList.contains(value.toUpperCase())) {
-            return false;
-        }
-        return true;
+        return valueList.contains(value.toUpperCase());
     }
 
     @Override

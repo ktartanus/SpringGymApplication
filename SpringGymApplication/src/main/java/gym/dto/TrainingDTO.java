@@ -11,9 +11,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-/**
- * Created by Tarti on 2016-12-28.
- */
 @VStatus
 public class TrainingDTO {
 

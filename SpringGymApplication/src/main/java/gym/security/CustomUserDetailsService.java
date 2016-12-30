@@ -1,7 +1,10 @@
 package gym.security;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import gym.model.enums.Role;
+import gym.utlis.EnumConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,9 +33,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 		if(null == user){
 			throw new UsernameNotFoundException("No user present with username: "+username);
 		}else{
-			List<String> userRoles=userRolesRepository.findRoleByUserName(username);
+			List<Role> roleList = userRolesRepository.findRoleByUserName(username);
+			List<String> userRoles= EnumConverter.convertEnumListToStringList(roleList);
 			return new CustomUserDetails(user,userRoles);
 		}
 	}
-		
+
 }

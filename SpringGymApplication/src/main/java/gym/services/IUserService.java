@@ -8,4 +8,5 @@ import gym.model.User;
 public interface IUserService {
     User registerNewUserAccount(RegistrationDTO registrationDTO)
             throws EmailExistsException, UserExistsException;
+    User getLoggedUser();
 }

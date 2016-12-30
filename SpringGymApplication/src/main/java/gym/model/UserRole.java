@@ -1,44 +1,48 @@
 package gym.model;
 
+import gym.model.enums.Role;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="user_roles")
+@Table(name="USER_ROLES")
 public class UserRole {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)    
-    @Column(name="user_role_id")
-	private Long userroleid;
+    @Column(name="USER_ROLE_ID")
+	private Long userRoleId;
 	
-	@Column(name="userid")
-	private Long userid;
-	
-	@Column(name="role")
-	private String role;	
+	@Column(name="ROLE")
+	@Enumerated(EnumType.STRING)
+	private Role role;
 
-	public String getRole() {
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "USER_TO_ROLE_ID")
+	private User user;
+
+	public Long getUserRoleId() {
+		return userRoleId;
+	}
+
+	public void setUserRoleId(Long userRoleId) {
+		this.userRoleId = userRoleId;
+	}
+
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
-	public Long getUserid() {
-		return userid;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserid(Long userid) {
-		this.userid = userid;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Long getUserroleid() {
-		return userroleid;
-	}
-
-	public void setUserroleid(Long userroleid) {
-		this.userroleid = userroleid;
-	}	
-	
 }

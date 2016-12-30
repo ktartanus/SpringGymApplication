@@ -110,6 +110,47 @@
      </footer>
 
 
+    <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+        <!--<div class="modal-dialog">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                    <!--<h4 class="modal-title">Modal title</h4>-->
+                <!--</div>-->
+                <!--<form class="form-inline" action="#" th:action="@{/addTraining}" th:object="${trainingDTO}" method="post">-->
+                    <!--<div class="modal-body">-->
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-xs-12" for="excercise">Excercise name :</label>-->
+                            <!--<input type="text"  th:field="*{excercise}" class="form-control" id="excercise" />-->
+                        <!--</div>-->
+                        <!--<div class="alert alert-danger" th:if="${#fields.hasErrors('excercise')}" th:errors="*{excercise}">Wrong Excercise name</div>-->
+
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-xs-12" for="series">Series number :</label>-->
+                            <!--<input type="number" th:field="*{series}" class="form-control col-xs-12" id="series" />-->
+                        <!--</div>-->
+                        <!--<div class="alert alert-danger" th:if="${#fields.hasErrors('series')}" th:errors="*{series}">Wrong series number </div>-->
+
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-xs-12" for="repeats">Repeats number:</label>-->
+                            <!--<input  type="number" th:field="*{repeats}" class="form-control col-xs-12" id="repeats" />-->
+                        <!--</div>-->
+                        <!--<div class="alert alert-danger" th:if="${#fields.hasErrors('repeats')}" th:errors="*{repeats}">Wrong repeats number</div>-->
+
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-xs-12" for="date">Date:</label>-->
+                            <!--<input  type="date" th:type="date" th:field="*{date}" class="form-control col-xs-12" id="date" />-->
+                        <!--</div>-->
+                        <!--<div class="alert alert-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Wrong date</div>-->
+                    <!--</div>-->
+                <!--<div class="modal-footer">-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                    <!--<button type="submit" class="btn btn-primary">Save changes</button>-->
+                <!--</div>-->
+                <!--</form>-->
+            <!--</div> &lt;!&ndash; /.modal-content &ndash;&gt;-->
+        <!--</div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+    <!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
 </body>
 </html>
 

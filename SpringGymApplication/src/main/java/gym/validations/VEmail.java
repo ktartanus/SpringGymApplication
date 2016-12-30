@@ -14,11 +14,11 @@ import javax.validation.Payload;
 
 @Target({ TYPE, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = EmailValidator.class)
+@Constraint(validatedBy = VEmailValidator.class)
 @Documented
-public @interface ValidEmail {
+public @interface VEmail {
 
-    String message() default "Invalid Email";
+    String message() default "Invalid VEmail";
 
     Class<?>[] groups() default {};
 

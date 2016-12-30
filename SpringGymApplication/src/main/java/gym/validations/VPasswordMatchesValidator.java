@@ -5,10 +5,10 @@ import javax.validation.ConstraintValidatorContext;
 
 import gym.dto.RegistrationDTO;
 
-public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
+public class VPasswordMatchesValidator implements ConstraintValidator<VPasswordMatches, Object> {
 
     @Override
-    public void initialize(final PasswordMatches constraintAnnotation) {
+    public void initialize(final VPasswordMatches constraintAnnotation) {
         //
     }
 

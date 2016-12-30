@@ -2,8 +2,8 @@ package gym.controller;
 
         import javax.validation.Valid;
 
-        import gym.Validations.EmailExistsException;
-        import gym.Validations.UserExistsException;
+        import gym.validations.EmailExistsException;
+        import gym.validations.UserExistsException;
         import gym.dto.RegistrationDTO;
         import gym.model.User;
         import gym.services.IUserService;

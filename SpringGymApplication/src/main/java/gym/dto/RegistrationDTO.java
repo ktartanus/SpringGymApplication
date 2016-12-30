@@ -1,20 +1,17 @@
 package gym.dto;
 
 
-import gym.Validations.PasswordMatches;
-import gym.Validations.ValidEmail;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
+import gym.validations.VPasswordMatches;
+import gym.validations.VEmail;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
  * Created by Tarti on 2016-12-22.
  */
-@PasswordMatches
+@VPasswordMatches
 public class RegistrationDTO {
 
 
@@ -25,7 +22,7 @@ public class RegistrationDTO {
     private String accountName;
 
     @NotNull
-    @ValidEmail
+    @VEmail
     private String email;
 
     @NotNull

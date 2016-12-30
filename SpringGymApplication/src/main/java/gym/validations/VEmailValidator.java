@@ -1,4 +1,4 @@
-package gym.Validations;
+package gym.validations;
 
 
         import java.util.regex.Matcher;
@@ -7,13 +7,13 @@ package gym.Validations;
         import javax.validation.ConstraintValidator;
         import javax.validation.ConstraintValidatorContext;
 
-public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
+public class VEmailValidator implements ConstraintValidator<VEmail, String> {
     private Pattern pattern;
     private Matcher matcher;
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     @Override
-    public void initialize(final ValidEmail constraintAnnotation) {
+    public void initialize(final VEmail constraintAnnotation) {
     }
 
     @Override

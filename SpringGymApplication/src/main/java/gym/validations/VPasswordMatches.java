@@ -1,4 +1,4 @@
-package gym.Validations;
+package gym.validations;
 
         import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
         import static java.lang.annotation.ElementType.TYPE;
@@ -13,9 +13,9 @@ package gym.Validations;
 
 @Target({ TYPE, ANNOTATION_TYPE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = PasswordMatchesValidator.class)
+@Constraint(validatedBy = VPasswordMatchesValidator.class)
 @Documented
-public @interface PasswordMatches {
+public @interface VPasswordMatches {
 
     String message() default "Passwords don't match";
 

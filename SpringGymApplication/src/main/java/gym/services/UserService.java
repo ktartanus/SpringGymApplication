@@ -1,13 +1,18 @@
 package gym.services;
 
-import gym.Validations.EmailExistsException;
-import gym.Validations.UserExistsException;
+import gym.controller.RestErrorHandler;
+import gym.model.enums.Role;
+import gym.validations.EmailExistsException;
+import gym.validations.UserExistsException;
 import gym.dto.RegistrationDTO;
 import gym.model.User;
 import gym.model.UserRepository;
 import gym.model.UserRole;
 import gym.model.UserRolesRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +20,8 @@ import javax.transaction.Transactional;
 
 @Service
 public class UserService implements IUserService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestErrorHandler.class);
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -42,13 +49,11 @@ public class UserService implements IUserService {
         user.setEmail(registrationDTO.getEmail());
         user.setEnabled(1);
         User newUser = userRepository.save(user);
-        System.out.println("dodano nowego usera");
 
         UserRole user_role = new UserRole();
-        user_role.setRole("ROLE_USER");
-        user_role.setUserid(newUser.getUserid());
+        user_role.setRole(Role.ROLE_USER);
+        user_role.setUser(newUser);
         userRolesRepository.save(user_role);
-        System.out.println("dodano role do usera");
         return newUser;
     }
     private boolean emailExist(String email) {
@@ -64,6 +69,12 @@ public class UserService implements IUserService {
             return true;
         }
         return false;
+    }
+
+    public User getLoggedUser(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        LOGGER.debug("Username : " + username);
+        return userRepository.findByUserName(username);
     }
 
 }

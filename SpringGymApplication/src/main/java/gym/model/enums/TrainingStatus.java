@@ -8,8 +8,8 @@ public enum TrainingStatus
 
     public static boolean contains(String value) {
 
-        for (Excercise e : Excercise.values()) {
-            if (e.name().equals(value)) {
+        for (TrainingStatus t : TrainingStatus.values()) {
+            if (t.name().equals(value)) {
                 return true;
             }
         }

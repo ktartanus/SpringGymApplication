@@ -18,24 +18,46 @@ $(document).ready(function() {
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "/addTraining?${_csrf.parameterName}=${_csrf.token}",
-                data: JSON.stringify(
+                url: "/addTrainings?${_csrf.parameterName}=${_csrf.token}",
+                data: JSON.stringify([
                     {
-                        excercise: "DISY"
+                        id: 11
                         ,
 
-                        status: "IN_PRGRESS"
+                        excercise: "DIPSY"
                         ,
 
-                        series: 0
+                        status: "IN_PROGRESS"
                         ,
 
-                        repeats: 0
+                        series: 1
                         ,
 
-                        date: new Date(2016,02,14,0,0,0,0)
-                    }),
-                success: function(data){ console.log(data);},
+                        repeats: 2
+                        ,
+
+                        date: new Date(2017,00,05,0,0,0,0)
+                    },
+                    {
+                        id: 10
+                        ,
+
+                        excercise: "BRZUSZKI"
+                        ,
+
+                        status: "IN_PROGRESS"
+                        ,
+
+                        series: 1
+                        ,
+
+                        repeats: 4
+                        ,
+
+                        date: new Date(2017,00,05,0,0,0,0)
+                    }
+                    ]),
+                success: function(data){ console.log(data); console.log(new Date(data[0].date))},
                 error: function(data){ console.log(data);}
             });
 
@@ -44,10 +66,48 @@ $(document).ready(function() {
         eventClick: function() {
             alert('a event has been clicked!');
             $.ajax({
-                    type: "GET",
-                    contentType: "application/json",
-                    url: "/getTrainings?${_csrf.parameterName}=${_csrf.token}",
-                success: function(data){ console.log(data);},
+                type: "PATCH",
+                contentType: "application/json",
+                url: "/updateTrainings?${_csrf.parameterName}=${_csrf.token}",
+                data: JSON.stringify([
+                    {
+                        id: 21
+                        ,
+
+                        excercise: "PODCIAGANIE"
+                        ,
+
+                        status: "IN_PROGRESS"
+                        ,
+
+                        series: 4
+                        ,
+
+                        repeats: 10
+                        ,
+
+                        date: new Date(2017,00,05,0,0,0,0)
+                    },
+                    {
+                        id: 22
+                        ,
+
+                        excercise: "KLATA"
+                        ,
+
+                        status: "IN_PROGRESS"
+                        ,
+
+                        series: 4
+                        ,
+
+                        repeats: 10
+                        ,
+
+                        date: new Date(2017,00,05,0,0,0,0)
+                    }
+                ]),
+                success: function(data){ console.log(data); console.log(new Date(data.date))},
                 error: function(data){ console.log(data);}
             });
 

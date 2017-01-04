@@ -33,11 +33,12 @@ public class Training implements Serializable{
     private Integer repeats;
 
     @Column(name ="TRAINING_DATE")
-    private Date training_date;
+    private Date trainingDate;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_TO_TRAINING_ID")
     private User user;
+
 
     public TrainingStatus getStatus() { return status; }
 
@@ -75,12 +76,12 @@ public class Training implements Serializable{
         this.repeats = repeats;
     }
 
-    public Date getTraining_date() {
-        return training_date;
+    public Date getTrainingDate() {
+        return trainingDate;
     }
 
-    public void setTraining_date(Date training_date) {
-        this.training_date = training_date;
+    public void setTrainingDate(Date trainingDate) {
+        this.trainingDate = trainingDate;
     }
 
     public User getUser() {

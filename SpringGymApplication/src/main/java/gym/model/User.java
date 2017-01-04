@@ -28,11 +28,11 @@ public class User implements Serializable {
 	private int enabled;
 
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_TO_TRAINING_ID")
 	private List<Training> trainingList;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_TO_ROLE_ID")
 	private List<UserRole> userRoleList;
 

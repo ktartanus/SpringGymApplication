@@ -3,6 +3,7 @@ package gym.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gym.model.enums.Excercise;
 import gym.model.enums.TrainingStatus;
+import gym.validations.VDuplicateExcercise;
 import gym.validations.VEnum;
 import gym.validations.VStatus;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -12,7 +13,10 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @VStatus
+@VDuplicateExcercise
 public class TrainingDTO {
+
+    private Long id;
 
     @NotNull
     @NotEmpty
@@ -32,8 +36,16 @@ public class TrainingDTO {
     @Min(value=1)
     private Integer repeats;
 
-    @JsonProperty("data_treningu")
+    //@JsonProperty("data_treningu")
     private Date date;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getExcercise() {
         return excercise;

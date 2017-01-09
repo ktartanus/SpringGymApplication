@@ -3,6 +3,8 @@ package gym.controller;
 
 import gym.dto.TrainingDTO;
 import gym.dto.ValidListDTO;
+import gym.model.enums.Excercise;
+import gym.model.enums.TrainingStatus;
 import gym.services.ITrainingService;
 
 import org.slf4j.Logger;
@@ -30,6 +32,20 @@ public class RestTrainingController {
     public ValidListDTO<TrainingDTO> getTrainings() {
 
         return new ValidListDTO<>(trainingService.getTrainings());
+    }
+
+    @RequestMapping(value="/getStatusEnum", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public List<TrainingStatus> getStatuses() {
+
+        return trainingService.getTrainngStatuses();
+    }
+
+    @RequestMapping(value="/getExcerciseEnum", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public List<Excercise> getExcercises() {
+
+        return trainingService.getTrainngExcercises();
     }
 
     @RequestMapping(value="/addTraining", method=RequestMethod.POST, produces = "application/json; charset=utf-8")

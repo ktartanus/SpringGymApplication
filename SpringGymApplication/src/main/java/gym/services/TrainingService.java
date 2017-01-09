@@ -8,10 +8,12 @@ import gym.model.User;
 import gym.model.enums.Excercise;
 import gym.model.enums.TrainingStatus;
 import gym.utlis.DateUtil;
+import gym.utlis.EnumConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +58,6 @@ public class TrainingService implements ITrainingService {
         for(TrainingDTO trainingDTO : validListDTO){
             Training newTraining = createTraining(trainingDTO, loggedUser);
             newTraining = trainingRepository.save(newTraining);
-            System.out.println("Data treningu : " + newTraining.getTrainingDate());
             TrainingDTO newTrainingDTO = createTrainingDTO(newTraining);
             trainingDTOList.add(newTrainingDTO);
         }
@@ -82,10 +83,22 @@ public class TrainingService implements ITrainingService {
         }
     }
 
+    public List<TrainingStatus> getTrainngStatuses(){
+        List<TrainingStatus> trainingStatuses = new ArrayList<>(Arrays.asList(TrainingStatus.values()));
+
+        return trainingStatuses;
+    }
+
+    public List<Excercise> getTrainngExcercises(){
+        List<Excercise> trainingExcercises = new ArrayList<>(Arrays.asList(Excercise.values()));
+
+        return trainingExcercises;
+    }
+
     private TrainingDTO createTrainingDTO(Training training){
         Date converted_Date = DateUtil.removeTime(training.getTrainingDate());
-
         TrainingDTO newTrainingDTO = new TrainingDTO();
+        newTrainingDTO.setId(training.getTrainingId());
         newTrainingDTO.setExcercise(training.getExcercise().name());
         newTrainingDTO.setRepeats(training.getRepeats());
         newTrainingDTO.setStatus(training.getStatus().name());
@@ -102,7 +115,7 @@ public class TrainingService implements ITrainingService {
         newTraining.setExcercise(Excercise.valueOf(trainingDTO.getExcercise()));
         newTraining.setRepeats(trainingDTO.getRepeats());
         newTraining.setSeries_number(trainingDTO.getSeries());
-        newTraining.setTrainingDate(trainingDTO.getDate());
+        newTraining.setTrainingDate(DateUtil.removeTime(trainingDTO.getDate()));
         newTraining.setStatus(TrainingStatus.valueOf(trainingDTO.getStatus()));
 
         return newTraining;

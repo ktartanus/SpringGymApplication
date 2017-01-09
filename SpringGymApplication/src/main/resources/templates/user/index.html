@@ -22,8 +22,11 @@
             th:src="@{/webjars/bootstrap/3.3.4/js/bootstrap.min.js}"></script>
     <script src="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.min.js"
             th:src="@{/webjars/fullcalendar/2.2.5/fullcalendar.min.js}" type="text/javascript"></script>
-    <script src="../static/js/callendar.css"
+    <script src="../static/js/callendar.js"
             th:src="@{/js/callendar.js}" type="text/javascript">
+    </script>
+    <script src="../static/js/script.js"
+            th:src="@{/js/script.js}" type="text/javascript">
     </script>
 </head>
 <body id="home">
@@ -110,47 +113,103 @@
      </footer>
 
 
-    <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
-        <!--<div class="modal-dialog">-->
-            <!--<div class="modal-content">-->
-                <!--<div class="modal-header">-->
-                    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-                    <!--<h4 class="modal-title">Modal title</h4>-->
-                <!--</div>-->
-                <!--<form class="form-inline" action="#" th:action="@{/addTraining}" th:object="${trainingDTO}" method="post">-->
-                    <!--<div class="modal-body">-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-xs-12" for="excercise">Excercise name :</label>-->
-                            <!--<input type="text"  th:field="*{excercise}" class="form-control" id="excercise" />-->
-                        <!--</div>-->
-                        <!--<div class="alert alert-danger" th:if="${#fields.hasErrors('excercise')}" th:errors="*{excercise}">Wrong Excercise name</div>-->
+    <div class="modal fade" id="myAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Training</h4>
+                </div>
+                <form id="addTrainingForm" class="form-inline" action="#" method="post">
+                    <div class="form-group">
+                        <label class="col-xs-12" for="dateInput">Date:</label>
+                        <input  type="date" disabled="true" class="form-control col-xs-12 dateInput" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12" for="statusInput">Status :</label>
+                        <select class="form-control col-xs-12 statusInput" name="statusInput"></select>
+                    </div>
+                    <div class="excercise">
+                        <span class="modal-body-header">Excercise</span>
+                        <button type="button" class="btn btn-primary deleteButton" value="remove">remove</button>
+                        <button type="button" class="btn btn-primary slideButton" value="-">-</button>
+                        <div class="modal-body" >
+                            <div class="form-group">
+                                <label class="col-xs-12" for="excerciseInput" >Excercise name :</label>
+                                <select class="form-control col-xs-12 excerciseInput" name="excerciseInput"></select>
+                            </div>
 
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-xs-12" for="series">Series number :</label>-->
-                            <!--<input type="number" th:field="*{series}" class="form-control col-xs-12" id="series" />-->
-                        <!--</div>-->
-                        <!--<div class="alert alert-danger" th:if="${#fields.hasErrors('series')}" th:errors="*{series}">Wrong series number </div>-->
+                            <div class="form-group">
+                                <label class="col-xs-12" for="seriesInput">Series number :</label>
+                                <input type="number" min="1" class="form-control col-xs-12 seriesInput" />
+                            </div>
 
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-xs-12" for="repeats">Repeats number:</label>-->
-                            <!--<input  type="number" th:field="*{repeats}" class="form-control col-xs-12" id="repeats" />-->
-                        <!--</div>-->
-                        <!--<div class="alert alert-danger" th:if="${#fields.hasErrors('repeats')}" th:errors="*{repeats}">Wrong repeats number</div>-->
 
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-xs-12" for="date">Date:</label>-->
-                            <!--<input  type="date" th:type="date" th:field="*{date}" class="form-control col-xs-12" id="date" />-->
-                        <!--</div>-->
-                        <!--<div class="alert alert-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Wrong date</div>-->
-                    <!--</div>-->
-                <!--<div class="modal-footer">-->
-                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-                    <!--<button type="submit" class="btn btn-primary">Save changes</button>-->
-                <!--</div>-->
-                <!--</form>-->
-            <!--</div> &lt;!&ndash; /.modal-content &ndash;&gt;-->
-        <!--</div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
-    <!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
+
+                            <div class="form-group">
+                                <label class="col-xs-12" for="repeatsInput">Repeats number:</label>
+                                <input  type="number" min="1" class="form-control col-xs-12 repeatsInput"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" id="modalSubmit" class="btn btn-primary">Save changes</button>
+                        <button type="button" id="addNewExcerciseButton" class="btn btn-primary">+</button>
+                    </div>
+                </form>
+            </div> <!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="myUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Update Training</h4>
+                </div>
+                <form id="updateTrainingForm" class="form-inline" action="#" method="post">
+                    <div class="form-group">
+                        <label class="col-xs-12" for="dateInput">Date:</label>
+                        <input  type="date" disabled="true" class="form-control col-xs-12 dateInput" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12" for="statusInput">Status :</label>
+                        <select class="form-control col-xs-12 statusInput" name="statusInput"></select>
+                    </div>
+                    <div class="excercise">
+                        <span class="modal-body-header">Excercise</span>
+                        <button type="button" class="btn btn-primary deleteButton" value="remove">remove</button>
+                        <button type="button" class="btn btn-primary slideButton" value="-">-</button>
+                        <div class="modal-body" >
+                            <div class="form-group">
+                                <label class="col-xs-12" for="excerciseInput" >Excercise name :</label>
+                                <select class="form-control col-xs-12 excerciseInput" name="excerciseInput"></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-12" for="seriesInput">Series number :</label>
+                                <input type="number" min="1" class="form-control col-xs-12 seriesInput" />
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label class="col-xs-12" for="repeatsInput">Repeats number:</label>
+                                <input  type="number" min="1" class="form-control col-xs-12 repeatsInput" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary modalSubmit">Save changes</button>
+                        <button type="button" class="btn btn-primary addNewExcerciseButton">+</button>
+                    </div>
+                </form>
+            </div> <!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </body>
 </html>
 

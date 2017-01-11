@@ -24,11 +24,19 @@ public class VDuplicateExcerciseValidator implements ConstraintValidator<VDuplic
     public boolean isValid(final Object obj, final ConstraintValidatorContext context) {
 
         final TrainingDTO training = (TrainingDTO) obj;
-
         Excercise excercise = Excercise.valueOf(training.getExcercise());
+        Long id = training.getId();
         List<Training> trainingList = trainingRepository.findByExcerciseAndTrainingDate(excercise, training.getDate());
 
+
         if(trainingList.size()>0){
+            if(id != null){
+                for(Training t : trainingList){
+                    if(t.getTrainingId()== id){
+                        return true;
+                    }
+                }
+            }
             return false;
         }
         return true;

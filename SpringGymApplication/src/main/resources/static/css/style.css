@@ -241,4 +241,16 @@ footer .footer-below {
 .topLine {
     border-top: 1px solid #e5e5e5;
 }
+.hidden {
+    display:none;
+}
+
+.fc-content {
+    height: 110px;
+}
+
+#chartdiv{
+    width:100%;
+    min-height: 500px;
+}
 

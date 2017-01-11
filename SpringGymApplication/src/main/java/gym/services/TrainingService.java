@@ -104,6 +104,7 @@ public class TrainingService implements ITrainingService {
         newTrainingDTO.setStatus(training.getStatus().name());
         newTrainingDTO.setDate(converted_Date);
         newTrainingDTO.setSeries(training.getSeries_number());
+        newTrainingDTO.setWeight(training.getWeight());
 
         return newTrainingDTO;
     }
@@ -117,6 +118,7 @@ public class TrainingService implements ITrainingService {
         newTraining.setSeries_number(trainingDTO.getSeries());
         newTraining.setTrainingDate(DateUtil.removeTime(trainingDTO.getDate()));
         newTraining.setStatus(TrainingStatus.valueOf(trainingDTO.getStatus()));
+        newTraining.setWeight(trainingDTO.getWeight());
 
         return newTraining;
     }
@@ -131,6 +133,7 @@ public class TrainingService implements ITrainingService {
         newTraining.setSeries_number(trainingDTO.getSeries());
         newTraining.setTrainingDate(trainingDTO.getDate());
         newTraining.setStatus(TrainingStatus.valueOf(trainingDTO.getStatus()));
+        newTraining.setWeight(trainingDTO.getWeight());
 
         return newTraining;
     }

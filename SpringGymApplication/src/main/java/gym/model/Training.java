@@ -32,6 +32,9 @@ public class Training implements Serializable{
     @Column(name = "REPEATS")
     private Integer repeats;
 
+    @Column(name = "WEIGHT")
+    private String weight;
+
     @Column(name ="TRAINING_DATE")
     private Date trainingDate;
 
@@ -74,6 +77,14 @@ public class Training implements Serializable{
 
     public void setRepeats(Integer repeats) {
         this.repeats = repeats;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
     }
 
     public Date getTrainingDate() {

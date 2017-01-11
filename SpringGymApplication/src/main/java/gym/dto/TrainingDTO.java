@@ -5,6 +5,7 @@ import gym.model.enums.Excercise;
 import gym.model.enums.TrainingStatus;
 import gym.validations.VDuplicateExcercise;
 import gym.validations.VEnum;
+import gym.validations.VNegativeWeight;
 import gym.validations.VStatus;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -35,6 +36,11 @@ public class TrainingDTO {
     @NotNull
     @Min(value=1)
     private Integer repeats;
+
+    @NotNull
+    @NotEmpty
+    @VNegativeWeight
+    private String weight;
 
     //@JsonProperty("data_treningu")
     private Date date;
@@ -73,6 +79,14 @@ public class TrainingDTO {
 
     public void setRepeats(Integer repeats) {
         this.repeats = repeats;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
     }
 
     public Date getDate() {

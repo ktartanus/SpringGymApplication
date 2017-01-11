@@ -26,4 +26,18 @@ public class BasicController {
         return "user/index";
     }
 
+    @RequestMapping("/403")
+    public String accessDenied() {
+        return "403";
+    }
+
+    @RequestMapping("/user/statistics")
+    public String statistics() {
+        return "user/statistics";
+    }
+
+    @RequestMapping("/user/calculators")
+    public String calculators() {
+        return "user/calculators";
+    }
 }

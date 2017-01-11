@@ -5,6 +5,7 @@ var trainingHandler = (function(){
         keyboard: true,
         show: true,
     };
+    var deletedExcercises = [];
     function convertDateToInputDate(date){
         var convertedDate = "";
         var mydate = new Date(date);
@@ -27,7 +28,7 @@ var trainingHandler = (function(){
 
     function setDateInTrainingForm(clickedDate) {
         var convertedDate = convertDateToInputDate(clickedDate);
-        $("#addTrainingForm .form-group input").val(convertedDate);
+        $("#addTrainingForm .form-group .dateInput").val(convertedDate);
     }
     function setDefaultStatusInTrainingFrom(clickedDate) {
         var clickedDateTime = clickedDate.getTime();
@@ -40,14 +41,25 @@ var trainingHandler = (function(){
             $('#statusInput').val("IN_PROGRESS");
 
         }
-    };
+    }
     function refreshForm(formName){
         $("#" + formName + " > div.excercise").not(":first").each(function () {
             $(this).remove();
         });
-    };
-    function addAllTrainings(events) {
-        var convertedDate = new Date(events[0].date);
+        var $firstExcercieForm = $("#" + formName + " > div.excercise").eq(0);
+        $(".modal-body .form-group .seriesInput", $firstExcercieForm).val(4);
+        $(".modal-body .form-group .repeatsInput", $firstExcercieForm).val(8);
+        $(".modal-body .form-group .weightInput", $firstExcercieForm).val(20);
+        $(".modal-body .form-group .seriesInput", $firstExcercieForm).trigger("change");
+        $(".help-block").text("");
+
+    }
+
+    function removeWeightInputs(typeForm, nodeElement) {
+        var $weightinputParent =  $(" input.weightInput", nodeElement).not(":eq(0)").parent().remove();
+    }
+    function addAllTrainingsToUpdateForm(events) {
+        var convertedDate = convertDateToInputDate(new Date(events[0].date));
         $('#updateTrainingForm .statusInput').val(events[0].status);
         $('#updateTrainingForm .dateInput').val(convertedDate);
 
@@ -58,15 +70,30 @@ var trainingHandler = (function(){
     }
 
     function addSingleTrainig(singleEvent){
-
+        alert("wewnatrz addSignleTrainig");
         $modalExcerciseForm = $("#updateTrainingForm > div:nth-child(3)").clone(true,true);
         $newModalForm = $modalExcerciseForm.clone(true,true);
         $newModalForm.show();
         $('.modal-body', $newModalForm).hide();
         $('.slideButton', $newModalForm).text("+");
+        $('.idInput', $newModalForm).val(singleEvent.id);
         $('.excerciseInput', $newModalForm).val(singleEvent.excercise);
         $('.seriesInput', $newModalForm).val(singleEvent.series);
         $('.repeatsInput', $newModalForm).val(singleEvent.repeats);
+
+        var weightArray = singleEvent.weight.split("x");
+        var $weightInput = $('.weightInput', $newModalForm).parent();
+        $weightInput.removeClass("hidden");
+        for(singleWeight in weightArray){
+            if(singleWeight == 0){
+                $("input", $weightInput).val(weightArray[singleWeight]);
+            }
+            else {
+                var $clonedWeightInput = $weightInput.clone(true, true);
+                $("input", $clonedWeightInput).val(weightArray[singleWeight]);
+                $clonedWeightInput.insertAfter($weightInput);
+            }
+        }
 
         $(".modal-body-header", $newModalForm).text(singleEvent.excercise);
         $newModalForm.addClass("topLine");
@@ -76,18 +103,20 @@ var trainingHandler = (function(){
 
     my.convertDateToInputDate = function (date) {
         convertDateToInputDate(date);
-    }
+    };
     my.showUpdateEventForm = function (event) {
+        deletedExcercises = [];
         showModal("myUpdateModal");
-        addAllTrainings(event.training);
         refreshForm("updateTrainingForm");
-    }
+        addAllTrainingsToUpdateForm(event.training);
+    };
     my.showAddEventForm = function (clickedDate) {
         showModal("myAddModal");
         refreshForm("addTrainingForm");
+        //removeWeightInputs();
         setDateInTrainingForm(clickedDate);
         setDefaultStatusInTrainingFrom(clickedDate);
-    }
+    };
 
     function groupBy( array , f )
     {
@@ -139,98 +168,165 @@ var trainingHandler = (function(){
         return events;
     }
     my.callEvents = [];
-    my.moduleProperty = 1;
 
     function addTrainings() {
         $.ajax({
             type: "POST",
             contentType: "application/json",
             url: "/addTrainings?${_csrf.parameterName}=${_csrf.token}",
-            data: JSON.stringify(getAllExcercisesFromForm()),
+            data: JSON.stringify(getAllExcercisesFromForm("addTrainingForm")),
             success: function(data){
                 var events = getEvents(groupByDate(data));
                 var callendarEvents = callEvents.concat(getCallendarEvents(events));
                 callEvents = callendarEvents;
                 reloadCallendarEvents(callEvents);
-
                 alert("succes");
             },
-            error: function(data){  alert("fail");}
+            error: function(data) {
+                alert("fail");
+                handleFormErrors(data.responseJSON, "addTrainingForm");
+            }
         });
     };
 
-    my.updateTraining = function () {
+    function handleFormErrors(errors,formType) {
+        var myErrors = errors.fieldErrors;
+        for(error in myErrors){
+            var parsedError = parseErrorField(myErrors[error], formType);
+            handleFieldError(parsedError, formType);
+        }
+    }
+
+    function parseErrorField(unparsedError,formType) {
+        var test = unparsedError.field;
+        var testRE = test.match("\\[(.*)\\]");
+        var testRE2 = test.match("\\[(.*)\\]\\.(.*)");
+        var listElement = 0;
+        var field = "";
+        if (testRE2 != null){
+            listElement = testRE2[1];
+            field = testRE2[2];
+        }
+        else{
+            listElement = testRE[1];
+            field = "status";
+        }
+        if(formType == "updateTrainingForm"){
+            listElement =  parseInt(listElement) + 1;
+        }
+        return {listIndex : listElement, field : field, message : unparsedError.message};
+    }
+    function handleFieldError(fieldError, formType){
+        var $excerciseId = $("#"+ formType +">div.excercise").eq(fieldError.listIndex);
+        var inputId = "." + fieldError.field + "Input";
+        if(fieldError.field == "status"){
+            $(inputId, "#"+ formType).next().text(fieldError.message);
+
+        }
+        else if(fieldError.field == "weight"){
+            $(inputId, $excerciseId).parent().last().text(fieldError.message);
+        }
+        else {
+            $(inputId, $excerciseId).next().text(fieldError.message);
+        }
+    }
+    function deleteEventsFromCallendarEvents(){
+        for( i in callEvents){
+            for(j in callEvents[i].training)
+                for(k in deletedExcercises){
+                    if(callEvents[i].training[j].id == deletedExcercises[k]){
+                        callEvents[i].training.splice(j, 1);
+                        break;
+                    }
+                }
+
+            if(callEvents[i].training.length == 0){
+                callEvents.splice(i, 1);
+            }
+        }
+    }
+    function updateTraining() {
         $.ajax({
             type: "PATCH",
             contentType: "application/json",
             url: "/updateTrainings?${_csrf.parameterName}=${_csrf.token}",
-            data: JSON.stringify([
-                {
-                    id: 21
-                    ,
-
-                    excercise: "PODCIAGANIE"
-                    ,
-
-                    status: "IN_PROGRESS"
-                    ,
-
-                    series: 4
-                    ,
-
-                    repeats: 10
-                    ,
-
-                    date: new Date(2017,00,05,0,0,0,0)
-                },
-                {
-                    id: 22
-                    ,
-
-                    excercise: "KLATA"
-                    ,
-
-                    status: "IN_PROGRESS"
-                    ,
-
-                    series: 4
-                    ,
-
-                    repeats: 10
-                    ,
-
-                    date: new Date(2017,00,05,0,0,0,0)
-                }
-            ]),
-            success: function(data){ console.log(data); console.log(new Date(data.date))},
-            error: function(data){ console.log(data);}
+            data: JSON.stringify(getAllExcercisesFromUpdateForm("updateTrainingForm")),
+            success: function(data){
+                deleteTrainings();
+                var events = getEvents(groupByDate(data));
+                var callendarEvents = callEvents.concat(getCallendarEvents(events));
+                callEvents = callendarEvents;
+                reloadCallendarEvents(callEvents);
+                alert("sukces");
+            },
+            error: function(data){
+                alert("fail");
+                handleFormErrors(data.responseJSON, "updateTrainingForm");
+               }
         });
 
-    };
-    function getExcerciseDataFromInput(excercise){
+    }
+
+    function deleteTrainings(){
+        $.ajax({
+            type: "DELETE",
+            contentType: "application/json",
+            url: "/deleteTrainings?${_csrf.parameterName}=${_csrf.token}",
+            data: JSON.stringify(deletedExcercises),
+            success: function(data){
+                deleteEventsFromCallendarEvents();
+                reloadCallendarEvents(callEvents);
+                alert("sukces");},
+            error: function(data){
+                alert("fail");
+                console.log(data);}
+        });
+    }
+
+    function getExcerciseDataFromInput(excercise, typeForm){
+            var idinput = $('.idInput', excercise).val();
             var excerciseName = $('.excerciseInput', excercise).val();
             var series = $('.seriesInput', excercise).val();
             var repeats = $('.repeatsInput', excercise).val();
-            var status = $('#addTrainingForm .statusInput').val();
-            var date = $('#addTrainingForm .dateInput').val();
+            var status = $('#' + typeForm + ' .statusInput').val();
+            var date = $('#' + typeForm + ' .dateInput').val();
+            var weight = "";
+            $('.weightInput', excercise).each(function () {
+                if ($(this).val()!=null) {
+                    weight = weight + $(this).val() + "x";
+                }
+            });
+
+            weight = weight.slice(0, -1);
 
             var singleExcerciseResult = {};
             singleExcerciseResult.excercise = excerciseName;
             singleExcerciseResult.series = series;
             singleExcerciseResult.repeats = repeats;
             singleExcerciseResult.status = status;
+            singleExcerciseResult.weight = weight;
             singleExcerciseResult.date = date;
+            singleExcerciseResult.id = idinput;
             return singleExcerciseResult;
 
         }
 
-    function getAllExcercisesFromForm() {
+    function getAllExcercisesFromForm(typeForm) {
         var trainings = [];
-        $("#addTrainingForm .modal-body").each(function () {
-            trainings.push( getExcerciseDataFromInput(this));
+        $("#" + typeForm +" .modal-body").each(function () {
+            trainings.push( getExcerciseDataFromInput(this, typeForm));
         });
         return trainings;
     }
+
+    function getAllExcercisesFromUpdateForm(typeForm) {
+        var trainings = [];
+        $("#" + typeForm +" .modal-body").not(":first").each(function () {
+            trainings.push( getExcerciseDataFromInput(this, typeForm));
+        });
+        return trainings;
+    }
+
     function setExcerciseTittleFromSelectInput(){
         $(".excerciseInput").change(function () {
             $that = $(this);
@@ -271,7 +367,17 @@ var trainingHandler = (function(){
     my.deleteExcercise = function () {
         $(".deleteButton").click(function () {
            $(this).parent().remove();
-            console.log(callendarEvents);
+        });
+
+    };
+
+    my.deleteUpdatedExcercise = function () {
+        $(".deleteUpdateButton").click(function () {
+            var $parent = $(this).parent();
+            var $firstGroup = $("div.modal-body .form-group",$parent).eq(0);
+            var id = $("input", $firstGroup).val();
+            deletedExcercises.push(id);
+            $(this).parent().remove();
         });
 
     };
@@ -284,6 +390,16 @@ var trainingHandler = (function(){
         })
 
     };
+
+    my.updateTraining = function(){
+
+        $("#updateTrainingForm").submit(function(e){
+            e.preventDefault();
+            updateTraining();
+        })
+
+    };
+
     my.toggleExcercise = function(){
         $(".modal-body-header").click(function () {
             $(this).next().toggle(function () {
@@ -312,7 +428,7 @@ var trainingHandler = (function(){
     };
     my.addNewExcerciseSchema = function(){
         $modalForm = $("#addTrainingForm > div:nth-child(3)").clone(true,true);
-        $("#addNewExcerciseButton").click(function(e){
+        $(".addNewExcerciseButton").click(function(e){
             $newModalForm = $modalForm.clone(true,true);
             $(".modal-body input", $newModalForm).each(function(){
                 $(this).val("");
@@ -345,6 +461,20 @@ var trainingHandler = (function(){
             },
             error: function(data){ console.log(data);}
         });
+    };
+
+    my.addWeightInputsToForm = function(){
+        $(".seriesInput").change(function () {
+            var $parent = $(this).parent().parent();
+            removeWeightInputs("addTrainingForm", $parent);
+            var count = $(this).val();
+            var $weightinput =  $("input.weightInput", $parent).eq(0).parent().removeClass("hidden");
+            for(var i = count; i>=2; i--) {
+                var $clonedWeightInput = $weightinput.clone(true, true);
+                $("label", $clonedWeightInput).text("Series " + i + ":");
+                $clonedWeightInput.insertAfter($weightinput);
+            }
+        })
     };
 
     return my;

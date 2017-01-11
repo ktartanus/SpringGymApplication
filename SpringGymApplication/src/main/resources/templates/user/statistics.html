@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello Spring Security</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"  type="text/css"/>
+    <link href="../static/css/style.css"
+          th:href="@{/css/style.css}" rel="stylesheet" media="screen" type="text/css"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <script src="../static/js/statistics.js"
+            th:src="@{/js/statistics.js}" type="text/javascript">
+    </script>
+
+    <script src="" th:src="@{/webjars/amcharts/3.15.0/amcharts.js}" type="text/javascript"></script>
+    <script src="" th:src="@{/webjars/amcharts/3.15.0/serial.js}" type="text/javascript"></script>
+</head>
+<body id="home">
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll ">
+            <button type="button" class="navbar-toggle" data-toggle="collapse collapsed" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <div class="navbar-brand">myGym</div>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hidden">
+                    <a href="#"></a>
+                </li>
+                <li class="page-scroll">
+                    <a href="#" th:href="@{/user/index}">Home</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="#" th:href="@{/user/statistics}">Statistics</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="#" th:href="@{/user/calculators}">Calculators</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Header -->
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Statistics</h1>
+                <label for="userExcercisesList">Excercise:</label>
+                <select class="form-control" id="userExcercisesList">
+                    <option value="ALL" selected="selected">ALL</option>
+                </select>
+                <label for="userExcercisesLimit">Limit positions:</label>
+                <select class="form-control" id="userExcercisesLimit">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25" selected="selected">25</option>
+                    <option value="50">50</option>
+                </select>
+                <div id="chartdiv"/>
+            </div>
+        </div>
+    </div>
+</header>
+<footer class="text-center">
+    <div class="footer-above">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col col-md-4">
+                    <h3>Location</h3>
+                    <p>19Lutego 8
+                        <br/>Skierniewice,  PL 96-100</p>
+                </div>
+                <div class="footer-col col-md-4">
+                    <h3>Around the Web</h3>
+
+                </div>
+                <div class="footer-col col-md-4">
+                    <h3>About Author</h3>
+                    <p>Page created by Kamil Tartanus.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-below">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    Copyright &copy; Politechnika Warszawska
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>
+
+

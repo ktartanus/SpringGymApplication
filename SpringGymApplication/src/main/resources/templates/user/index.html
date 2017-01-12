@@ -12,6 +12,8 @@
           th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.css}" rel="stylesheet" ></link>
     <link href="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.print.css"
           th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.print.css}" rel="stylesheet" media="print"></link>
+    <link href="http://cdn.jsdelivr.net/webjars/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
     <link href="../static/css/style.css"
           th:href="@{/css/style.css}" rel="stylesheet" media="screen" type="text/css"/>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"
@@ -47,13 +49,13 @@
                         <a href="#"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#" th:href="@{/user/index}">Home</a>
+                        <a href="#" th:href="@{/user/index}"><i class="fa fa-home"></i>Home</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#" th:href="@{/user/statistics}">Statistics</a>
+                        <a href="#" th:href="@{/user/statistics}"><i class="fa fa-bar-chart"></i>Statistics</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#" th:href="@{/user/calculators}">Calculators</a>
+                        <a href="#" th:href="@{/user/calculators}"><i class="fa fa-calculator"></i>Calculators</a>
                     </li>
                 </ul>
             </div>

@@ -8,8 +8,11 @@
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
           rel="stylesheet" media="screen"  type="text/css"/>
+    <link href="http://cdn.jsdelivr.net/webjars/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
     <link href="../static/css/style.css"
           th:href="@{/css/style.css}" rel="stylesheet" media="screen" type="text/css"/>
+
     <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
             th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
     <script src="../static/js/statistics.js"
@@ -34,13 +37,13 @@
                     <a href="#"></a>
                 </li>
                 <li class="page-scroll">
-                    <a href="#" th:href="@{/user/index}">Home</a>
+                    <a href="#" th:href="@{/user/index}"><i class="fa fa-home"></i>Home</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="#" th:href="@{/user/statistics}">Statistics</a>
+                    <a href="#" th:href="@{/user/statistics}"><i class="fa fa-bar-chart"></i>Statistics</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="#" th:href="@{/user/calculators}">Calculators</a>
+                    <a href="#" th:href="@{/user/calculators}"><i class="fa fa-calculator"></i>Calculators</a>
                 </li>
             </ul>
         </div>
@@ -52,63 +55,114 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1>Calculators</h1>
+                <h1><i class="fa fa-calculator margin-right-10"></i>Calculators</h1>
                 <div class="row"></div>
                 <div id="BMIcalculator" class="col-md-4">
-                    <h3>BMI</h3>
-                    <span class="BMIinfo">info</span>
+                    <h3>BMI<i class="fa fa-info-circle BMIinfo"></i></h3>
+                    <div id="BMImodalInfo" class="alert alert-info alert-dismissable modalInfo hidden">
+                        <strong>BMI (Body Mass Index)</strong> is used as a screening tool to indicate whether a person is underweight, overweight, obese or a healthy weight for their height.
+                        <p class="infoContent">
+                            to <strong>16</strong>: starvation<br/>
+                            from <strong>16 to 17</strong>: emaciation<br/>
+                            from <strong>17 to 18.5</strong>: underweight<br/>
+                            from <strong>18.5 to 25</strong>: correct<br/>
+                            from <strong>25 to 30</strong>: overweight<br/>
+                            from <strong>30 to 35</strong>: I level obesity<br/>
+                            from <strong>35 to 40</strong>: II level obesity<br/>
+                            above <strong>40</strong>: III level obesity
+                        </p>
+                    </div>
                     <label for="BMIbodyWeight">Weight [kg]:</label>
-                    <input type="number"  min="10" max="300" class="form-control" id="BMIbodyWeight" value="60"></input>
+                    <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon glyphicon-scale"></span></span>
+                        <input type="number"  min="10" max="300" class="form-control" id="BMIbodyWeight" value="60"></input>
+                    </div>
                     <label for="BMIheight">Height [cm]:</label>
-                    <input type="number" min="80" max="300" class="form-control"  id="BMIheight" value="170"></input>
-                    <button class="btn btn-default BMIbutton">Check</button>
-                    <div class="BMIresult"></div>
+                    <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon"><i class="fa fa-long-arrow-up"></i></span>
+                        <input type="number" min="80" max="300" class="form-control"  id="BMIheight" value="170"></input>
+                    </div>
+                    <button class="btn btn-default BMIbutton  margin-top-10"><i class="fa fa-exchange"></i>Check</button>
+                    <div class="BMIresult calculatorResult"></div>
                 </div>
                 <div id="BMRcalculator" class="col-md-4">
-                    <h3>BMR</h3>
-                    <span class="BMRinfo">info</span>
+                    <h3>BMR<i class="fa fa-info-circle BMRinfo"></i></h3>
+                    <div id="BMRmodalInfo" class="alert alert-info alert-dismissable modalInfo hidden">
+                        <strong>BMR (Basal metabolic rate)</strong> is the total number of calories that your body needs to perform basic, life-sustaining functions. These basal functions include circulation, breathing, cell production, nutrient processing, protein synthesis and ion transport.
+                    </div>
                     <label for="BMRbodyWeight">Weight [kg]:</label>
-                    <input type="number"  min="10" max="300" class="form-control" id="BMRbodyWeight" value="60"></input>
+                    <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon glyphicon-scale"></span></span>
+                        <input type="number"  min="10" max="300" class="form-control" id="BMRbodyWeight" value="60"></input>
+                    </div>
+
                     <label for="BMRheight">Height [cm]:</label>
-                    <input type="number" min="80" max="300" class="form-control"  id="BMRheight" value="170"></input>
+                    <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon"><i class="fa fa-long-arrow-up"></i></span>
+                        <input type="number" min="80" max="300" class="form-control"  id="BMRheight" value="170"></input>
+                    </div>
+
                     <label for="BMRage">Age [years]:</label>
-                    <input type="number" min="1" max="150" class="form-control"  id="BMRage" value="25"></input>
+                    <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
+                        <input type="number" min="1" max="150" class="form-control"  id="BMRage" value="25"></input>
+                    </div>
+
+
                     <label for="BMRactivity">Activity:</label>
-                    <select  class="form-control"  id="BMRactivity">
-                        <option value="0">very low</option>
-                        <option value="1">low</option>
-                        <option value="2" selected="selected">middle</option>
-                        <option value="3">high</option>
-                        <option value="4">very high</option>
-                    </select>
-                    <label class="radio-inline"><input type="radio" name="BMRsex" class="BMRsex" value="male" checked="checked" />Male</label>
-                    <label class="radio-inline"><input type="radio" name="BMRsex" class="BMRsex" value="female"  />Female</label>
+                    <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon"><i class="fa fa-futbol-o"></i></span>
+                        <select  class="form-control"  id="BMRactivity">
+                            <option value="0">very low</option>
+                            <option value="1">low</option>
+                            <option value="2" selected="selected">middle</option>
+                            <option value="3">high</option>
+                            <option value="4">very high</option>
+                        </select>
+                    </div>
+
+                    <label class="radio-inline"><input type="radio" name="BMRsex" class="BMRsex" value="male" checked="checked" /><i class="fa fa-mars margin-right-5"></i>Male</label>
+                    <label class="radio-inline"><input type="radio" name="BMRsex" class="BMRsex" value="female"  /><i class="fa fa-venus margin-right-5"></i>Female</label>
                     <br/>
-                    <button class="btn btn-default BMRbutton">Check</button>
-                    <div class="BMRresult"></div>
+                    <button class="btn btn-default BMRbutton  margin-top-10"><i class="fa fa-exchange"></i>Check</button>
+                    <div class="BMRresult calculatorResult"></div>
                 </div>
                 <div id="RMcalculator" class="col-md-4">
-                    <h3>RM</h3>
-                    <span class="RMinfo">info</span>
+                    <h3>1RM<i class="fa fa-info-circle RMinfo"></i></h3>
+                    <div id="RMmodalInfo" class="alert alert-info alert-dismissable modalInfo hidden">
+                        <strong>1RM (One-repetition maximum)</strong> in weight training is the maximum amount of force that can be generated in one maximal contraction.
+                        <p class="infoContent">
+                             One repetition maximum can be used for determining an individual's maximum strength and is the method for determining the winner in events such as powerlifting and weightlifting competitions.
+                             One repetition maximum can also be used as an upper limit, in order to determine the desired "load" for an exercise (as a percentage of the 1RM).
+                        </p>
+                    </div>
                     <label for="RMweight">Weight [kg]:</label>
-                    <input type="number" min="1" max="500" class="form-control"  id="RMweight" value="50"></input>
+                    <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon glyphicon-scale"></span></span>
+                        <input type="number" min="1" max="500" class="form-control"  id="RMweight" value="50"></input>
+                    </div>
+
                     <label for="RMrepeats">Repeats:</label>
-                    <select  class="form-control"  id="RMrepeats">
-                        <option val="1" selected="selected">1</option>
-                        <option val="2">2</option>
-                        <option val="3">3</option>
-                        <option val="4">4</option>
-                        <option val="5">5</option>
-                        <option val="6">6</option>
-                        <option val="7">7</option>
-                        <option val="8">8</option>
-                        <option val="9">9</option>
-                        <option val="10">10</option>
-                        <option val="11">11</option>
-                        <option val="12">12</option>
-                    </select>
-                    <button class="btn btn-default RMbutton">Check</button>
-                    <div class="RMresult"></div>
+                    <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon"><i class="fa fa-braille"></i></span>
+                        <select  class="form-control"  id="RMrepeats">
+                            <option val="1" selected="selected">1</option>
+                            <option val="2">2</option>
+                            <option val="3">3</option>
+                            <option val="4">4</option>
+                            <option val="5">5</option>
+                            <option val="6">6</option>
+                            <option val="7">7</option>
+                            <option val="8">8</option>
+                            <option val="9">9</option>
+                            <option val="10">10</option>
+                            <option val="11">11</option>
+                            <option val="12">12</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-default RMbutton  margin-top-10"><i class="fa fa-exchange"></i>Check</button>
+                    <div class="RMresult calculatorResult"></div>
                 </div>
             </div>
         </div>

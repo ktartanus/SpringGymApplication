@@ -4,34 +4,39 @@ $(document).ready(function() {
     var femaleMetabolismIndex = [37, 37, 36.5, 36.5, 35, 34, 33.5];
 
     $(".BMIinfo").mouseover(function () {
-        var info = " Według Światowej Organizacji Zdrowia prawidłowy BMI oscyluje pomiędzy 18,6 – 24,9. Oznaczanie wskaźnika masy ciała ma znaczenie w ocenie zagrożenia chorobami związanymi z nadwagą i otyłością, np. cukrzycą, chorobą niedokrwienną serca, miażdżycą. Podwyższona wartość BMI związana jest ze zwiększonym ryzykiem wystąpienia takich chorób.";
-        var info2 = "do 16: wygłodzenie od 16 do 17: wychudzenie od 17 do 18.5: niedowaga od 18.5 do 25: wartość prawidłowaod 25 do 30: nadwaga od 30 do 35: I stopień otyłości od 35 do 40: II stopień otyłości powyżej 40: III stopień otyłości";
-        alert(info + info2);
+        $("#BMImodalInfo").removeClass("hidden")
+    });
+    $(".BMIinfo").mouseout(function () {
+        $("#BMImodalInfo").addClass("hidden")
     });
 
     $(".BMRinfo").mouseover(function () {
-        var info="Współczynnik ten określa minimalną ilość kalorii niezbędnych do zachowania podstawowych funkcji organizmu."
-        alert(info);
+        $("#BMRmodalInfo").removeClass("hidden")
+    });
+    $(".BMRinfo").mouseout(function () {
+        $("#BMRmodalInfo").addClass("hidden")
     });
 
     $(".RMinfo").mouseover(function () {
-        var info ="Wprowadź do formularza informacje o Twojej najlepszej serii. Kalkulator obliczy maksymalne teoretyczne obciążenie, przy którym będziesz w stanie wykonać jedno poprawne powtórzenie.";
-        alert(info);
+        $("#RMmodalInfo").removeClass("hidden")
+    });
+    $(".RMinfo").mouseout(function () {
+        $("#RMmodalInfo").addClass("hidden")
     });
 
     $(".BMIbutton").click(function () {
         var result = calculateBMI();
-        $(".BMIresult").text(result);
+        $(".BMIresult").text("Your BMI = " +result);
     });
 
     $(".BMRbutton").click(function () {
         var result = calculateBMR();
-        $(".BMRresult").text(result);
+        $(".BMRresult").text("Your BMR = " + result + "kcal");
     });
 
     $(".RMbutton").click(function () {
         var result = calculateRM();
-        $(".RMresult").text(result);
+        $(".RMresult").text("Your 1RM = " +result + "kg");
     });
 
     function calculateBMI() {

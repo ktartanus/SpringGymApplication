@@ -253,4 +253,66 @@ footer .footer-below {
     width:100%;
     min-height: 500px;
 }
+.info{
+    float:left;
+    border: 1px solid white;
+    solid : 5px;
+}
+.fa-info-circle{
+    float: right;
+}
+.margin-right-10{
+    margin-right: 10px;
+}
+.margin-left-10{
+    margin-left: 10px;
+}
+.margin-top-10{
+     margin-top:10px;
+}
+.margin-top-15{
+    margin-top:15px;
+}
+.margin-right-5{
+    margin-right:5px;
+}
+.margin-top-5{
+    margin-top:5px;
+}
 
+.input-group-addon {
+    min-width:42px;
+}
+.modalInfo{
+    position:absolute;
+    z-index : 100;
+    background-color: #fff;
+    color: #888;
+    text-align:left;
+}
+.infoContent{
+    font-size: 1.3rem;
+    padding-left:60px;
+    text-align:left;
+}
+.calculatorResult{
+    font-size:3rem;
+}
+.width-35p{
+    width:25%;
+}
+
+.toLeft{
+    float:left;
+}
+.toRight{
+    float:right;
+}
+.statisticsInput{
+    width:50%;
+}
+
+#statisticsModalInfo{
+    top:42px;
+    left:36px;
+}

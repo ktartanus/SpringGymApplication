@@ -8,6 +8,8 @@
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
           rel="stylesheet" media="screen"  type="text/css"/>
+    <link href="http://cdn.jsdelivr.net/webjars/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
     <link href="../static/css/style.css"
           th:href="@{/css/style.css}" rel="stylesheet" media="screen" type="text/css"/>
     <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
@@ -37,13 +39,13 @@
                     <a href="#"></a>
                 </li>
                 <li class="page-scroll">
-                    <a href="#" th:href="@{/user/index}">Home</a>
+                    <a href="#" th:href="@{/user/index}"><i class="fa fa-home"></i>Home</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="#" th:href="@{/user/statistics}">Statistics</a>
+                    <a href="#" th:href="@{/user/statistics}"><i class="fa fa-bar-chart"></i>Statistics</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="#" th:href="@{/user/calculators}">Calculators</a>
+                    <a href="#" th:href="@{/user/calculators}"><i class="fa fa-calculator"></i>Calculators</a>
                 </li>
             </ul>
         </div>
@@ -51,24 +53,47 @@
 </nav>
 
 <!-- Header -->
+
 <header>
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1>Statistics</h1>
-                <label for="userExcercisesList">Excercise:</label>
-                <select class="form-control" id="userExcercisesList">
-                    <option value="ALL" selected="selected">ALL</option>
-                </select>
-                <label for="userExcercisesLimit">Limit positions:</label>
-                <select class="form-control" id="userExcercisesLimit">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="25" selected="selected">25</option>
-                    <option value="50">50</option>
-                </select>
+                <div class="row">
+                    <div class="col-md-4">
+                        <i class="fa fa-info-circle fa-3x margin-top-15 margin-left-10 toLeft " id="statisticsInfo"></i>
+                        <div id="statisticsModalInfo" class="alert alert-info alert-dismissable margin-top-15 margin-left-10 modalInfo hidden">
+                            <strong>Weight training volume </strong>is the amount of work you perform during each workout. Each rep your perform adds to the total workout volume.<br/>
+                            <strong>In bodybuilding we assume that weight volume is the most important factor in growth of muscle tissue.</strong>
+
+                            <p class="infoContent">
+                                In the periodization model the period of high volume is called the hypertrophy phase.<br/>
+                                Muscle hypertrophy means the muscle cells grow larger. If your goal is to create a stimulus to gain muscle you should perform high volume training.
+                            </p>
+                        </div>
+                    </div>
+                     <div class="col-md-4"><h1><i class="fa fa-bar-chart margin-right-10"></i>Statistics</h1></div>
+                     <div class="col-md-4">
+                         <div class="form-inline">
+                             <div class="form-group toRight margin-right-10">
+                             <label for="userExcercisesList" class="margin-top-5 margin-right-10">Excercise:</label>
+                                 <select class="form-control width-35p" id="userExcercisesList">
+                                     <option value="ALL" selected="selected">ALL</option>
+                                 </select>
+                             </div>
+                             <div class="form-group toRight margin-right-10">
+                             <label for="userExcercisesLimit" class="margin-top-5 margin-right-10">Limit positions:</label>
+                                 <select class="form-control width-25p" id="userExcercisesLimit">
+                                     <option value="5">5</option>
+                                     <option value="10">10</option>
+                                     <option value="15">15</option>
+                                     <option value="20">20</option>
+                                     <option value="25" selected="selected">25</option>
+                                     <option value="50">50</option>
+                                 </select>
+                             </div>
+                        </div>
+                     </div>
+                </div>
                 <div id="chartdiv"/>
             </div>
         </div>

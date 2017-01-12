@@ -20,8 +20,11 @@ $(document).ready(function() {
     ];
     var chart = AmCharts.makeChart("chartdiv", {
         "theme": "none",
+        "color" : "#FFFFFF",
         "type": "serial",
         "startDuration": 2,
+        "fontSize" : 20,
+        "fontFamily" : "Lato",
         "dataProvider": [],
         "valueAxes": [{
             "position": "left",
@@ -75,9 +78,19 @@ $(document).ready(function() {
         reloadChart(newChartData);
     });
     $("#userExcercisesLimit").change(function () {
-        var selectedExcerciseLimit = $(this).val();
+        selectedExcerciseLimit = $(this).val();
         newChartData = getChartRepresentObject(events, selectedExcerciseName, selectedExcerciseLimit);
         reloadChart(newChartData);
+    });
+
+    $("#statisticsInfo").mouseover(function () {
+        $("#statisticsModalInfo").removeClass("hidden")
+        var width = $(this).css(width);
+        alert(width);
+        console.log(width);
+    });
+    $("#statisticsInfo").mouseout(function () {
+        $("#statisticsModalInfo").addClass("hidden")
     });
 
 

@@ -14,7 +14,7 @@ public interface ITrainingService {
     public List<TrainingDTO> getTrainings();
     public List<TrainingDTO> addTrainings(ValidListDTO<TrainingDTO> validListDTO);
     public void deleteTrainings(List<Long> ids);
-    public void updateTrainings(ValidListDTO<TrainingDTO> validListDTO);
+    public List<TrainingDTO> updateTrainings(ValidListDTO<TrainingDTO> validListDTO);
     public List<TrainingStatus> getTrainngStatuses();
     public List<Excercise> getTrainngExcercises();
 

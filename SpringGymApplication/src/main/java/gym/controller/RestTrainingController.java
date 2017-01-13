@@ -68,9 +68,9 @@ public class RestTrainingController {
     @ResponseBody
     public ValidListDTO<TrainingDTO> updateTrainings(@Valid @RequestBody ValidListDTO<TrainingDTO> trainingList) {
 
-        trainingService.updateTrainings(trainingList);
+        List<TrainingDTO> newTrainingDTOList = trainingService.updateTrainings(trainingList);
 
-        return trainingList;
+        return new ValidListDTO<>(newTrainingDTOList);
     }
 
     @RequestMapping(value="/deleteTrainings", method=RequestMethod.DELETE, produces = "application/json; charset=utf-8")

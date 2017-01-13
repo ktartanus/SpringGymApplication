@@ -74,13 +74,19 @@ public class TrainingService implements ITrainingService {
         }
     }
 
-    public void updateTrainings(ValidListDTO<TrainingDTO> validListDTO) {
+    public List<TrainingDTO> updateTrainings(ValidListDTO<TrainingDTO> validListDTO) {
         User loggedUser = userService.getLoggedUser();
+        List<TrainingDTO> trainingDTOList = new ArrayList<>();
 
         for(TrainingDTO trainingDTO : validListDTO){
             Training updatedTraining = updateTraining(trainingDTO, loggedUser);
-            trainingRepository.save(updatedTraining);
+            Training savedUpdatedTrainig;
+            TrainingDTO savedUpdatedTrainigDTO;
+            savedUpdatedTrainig = trainingRepository.save(updatedTraining);
+            savedUpdatedTrainigDTO = createTrainingDTO(savedUpdatedTrainig);
+            trainingDTOList.add(savedUpdatedTrainigDTO);
         }
+        return trainingDTOList;
     }
 
     public List<TrainingStatus> getTrainngStatuses(){

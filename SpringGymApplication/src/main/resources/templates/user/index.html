@@ -33,7 +33,7 @@
 </head>
 <body id="home">
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-        <div class="container">
+        <div class="container ">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll ">
                 <button type="button" class="navbar-toggle" data-toggle="collapse collapsed" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -64,7 +64,7 @@
 
     <!-- Header -->
     <header>
-        <div class="container">
+        <div class="container padd-top-120">
             <div class="row">
                 <div class="col-lg-12">
                     <img class="img-responsive"  src="../static/images/welcome.png"
@@ -73,8 +73,6 @@
                         <span class="name">Welcome to the GYM ARMY</span>
 
                         <div id='calendar' th:id="calendar"></div>
-
-                        <span class="skills">Web Developer - Graphic Artist - User Experience Designer</span>
 
                     </div>
                     <div class= ".hidden-sm-up visible-xs-block ">małe urządzenia</div>
@@ -123,52 +121,72 @@
                     <h4 class="modal-title">Add Training</h4>
                 </div>
                 <form id="addTrainingForm" class="form-inline" action="#" method="post">
-                    <div class="form-group">
-                        <label class="col-xs-12" for="dateInput">Date:</label>
-                        <input  type="date" disabled="true" class="form-control col-xs-12 dateInput" />
-                        <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-12" for="statusInput">Status :</label>
-                        <select class="form-control col-xs-12 statusInput" name="statusInput"></select>
-                        <div class="help-block with-errors"></div>
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-4">
+                            <div class="form-group toRight">
+                                <label for="dateInput">Date:</label>
+                                <div class="input-group margin-bottom-sm">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input  type="date" disabled="true" class="form-control dateInput" id="dateInput" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group toLeft">
+                                <label for="statusInput">Status :</label>
+                                <div class="input-group margin-bottom-sm">
+                                    <span class="input-group-addon"><i class="fa fa-thumbs-up"></i></span>
+                                    <select class="form-control statusInput" name="statusInput" id="statusInput"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-offset-2 col-md-8">
+                            <div class="help-block with-errors hidden"></div>
+                        </div>
                     </div>
                     <div class="excercise">
-                        <span class="modal-body-header">Excercise</span>
-                        <button type="button" class="btn btn-primary deleteButton" value="remove">remove</button>
-                        <button type="button" class="btn btn-primary slideButton" value="-">-</button>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <h3 class="modal-body-header excerciseFormTitle">Excercise</h3>
+                            </div>
+                            <div class="col-md-4 col-md-4">
+                                <button type="button" class="btn btn-danger deleteButton toRight margin-right-15" value="remove"><i class="fa fa-trash-o fa-lg margin-right-5 " />remove</button>
+                                <button type="button" class="btn slideButton btn-gym  toRight margin-right-5" ><i class="fa fa-angle-down "></i></button>
+                            </div>
+                        </div>
                         <div class="modal-body" >
                             <div class="form-group">
                                 <input class="idInput hidden" />
                             </div>
                             <div class="form-group">
                                 <label class="col-xs-12" for="excerciseInput" >Excercise name :</label>
-                                <select class="form-control col-xs-12 excerciseInput" name="excerciseInput"></select>
-                                <div class="help-block with-errors"></div>
+                                <select class="form-control col-xs-12 excerciseInput .bg-done" name="excerciseInput" id="excerciseInput"></select>
                             </div>
+                            <div class="help-block with-errors hidden"></div>
 
                             <div class="form-group">
                                 <label class="col-xs-12" for="seriesInput">Series number :</label>
-                                <input type="number" value="4" min="1" max="10" class="form-control col-xs-12 seriesInput" />
-                                <div class="help-block with-errors"></div>
+                                <input type="number" value="4" min="1" max="10" class="form-control col-xs-12 seriesInput" id="seriesInput" />
                             </div>
+                            <div class="help-block with-errors hidden"></div>
 
                             <div class="form-group">
                                 <label class="col-xs-12" for="repeatsInput">Repeats number:</label>
-                                <input  type="number"  value="8" max="100" min="1" class="form-control col-xs-12 repeatsInput"  />
-                                <div class="help-block with-errors"></div>
+                                <input  type="number"  value="8" max="100" min="1" class="form-control col-xs-12 repeatsInput" id="repeatsInput" />
                             </div>
+                            <div class="help-block with-errors hidden"></div>
                             <div class="form-group hidden">
                                 <label class="col-xs-12" >Series 1:</label>
                                 <input  type="number" min="1" class="form-control col-xs-12 weightInput" />
                             </div>
-                            <div class="help-block with-errors"></div>
+                            <div class="help-block with-errors hidden"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" id="modalSubmit" class="btn btn-primary">Save changes</button>
-                        <button type="button" class="btn btn-primary addNewExcerciseButton">+</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close margin-right-5" />Close</button>
+                        <button type="submit" id="modalSubmit" class="btn btn-gym"><i class="fa fa-check margin-right-5" />Save changes</button>
+                        <button type="button" class="btn btn-gym addNewExcerciseButton toLeft"><i class="fa fa-plus fa-lg " /></button>
                     </div>
                 </form>
             </div> <!-- /.modal-content -->
@@ -183,19 +201,38 @@
                     <h4 class="modal-title">Update Training</h4>
                 </div>
                 <form id="updateTrainingForm" class="form-inline" action="#" method="post">
-                    <div class="form-group">
-                        <label class="col-xs-12" for="dateInput">Date:</label>
-                        <input  type="date" disabled="true" class="form-control col-xs-12 dateInput" />
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-4">
+                            <div class="form-group toRight">
+                                <label for="dateInput">Date:</label>
+                                <div class="input-group margin-bottom-sm">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input  type="date" disabled="true" class="form-control col-xs-12 dateInput" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group toLeft">
+                                <label for="statusInput">Status :</label>
+                                <div class="input-group margin-bottom-sm">
+                                    <span class="input-group-addon"><i class="fa fa-thumbs-up"></i></span>
+                                    <select class="form-control col-xs-12 statusInput " name="statusInput"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="help-block with-errors hidden"></div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-12" for="statusInput">Status :</label>
-                        <select class="form-control col-xs-12 statusInput" name="statusInput"></select>
-                        <div class="help-block with-errors"></div>
-                    </div>
+
                     <div class="excercise">
-                        <span class="modal-body-header">Excercise</span>
-                        <button type="button" class="btn btn-primary deleteUpdateButton" value="remove">remove</button>
-                        <button type="button" class="btn btn-primary slideButton" value="-">-</button>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-8">
+                                <h3 class="modal-body-header excerciseFormTitle">Excercise</h3>
+                            </div>
+                            <div class="col-md-4 col-md-4">
+                                <button type="button" class="btn btn-danger deleteUpdateButton toRight margin-right-15" value="remove"><i class="fa fa-trash-o fa-lg margin-right-5 " />remove</button>
+                                <button type="button" class="btn slideButton btn-gym  toRight margin-right-5" ><i class="fa fa-angle-down "></i></button>
+                            </div>
+                        </div>
                         <div class="modal-body" >
                             <div class="form-group">
                                 <input class="idInput hidden" />
@@ -203,31 +240,29 @@
                             <div class="form-group">
                                 <label class="col-xs-12" for="excerciseInput" >Excercise name :</label>
                                 <select class="form-control col-xs-12 excerciseInput" name="excerciseInput"></select>
-                                <div class="help-block with-errors"></div>
                             </div>
-
+                            <div class="help-block with-errors hidden"></div>
                             <div class="form-group">
                                 <label class="col-xs-12" for="seriesInput">Series number :</label>
                                 <input type="number" min="1" class="form-control col-xs-12 seriesInput" />
-                                <div class="help-block with-errors"></div>
                             </div>
-
+                            <div class="help-block with-errors hidden"></div>
                             <div class="form-group">
                                 <label class="col-xs-12" for="repeatsInput">Repeats number:</label>
                                 <input  type="number" min="1" class="form-control col-xs-12 repeatsInput" />
-                                <div class="help-block with-errors"></div>
                             </div>
+                            <div class="help-block with-errors hidden"></div>
                             <div class="form-group hidden">
                                 <label class="col-xs-12" >Series 1:</label>
                                 <input  type="number" min="1" class="form-control col-xs-12 weightInput" />
                             </div>
-                            <div class="help-block with-errors"></div>
+                            <div class="help-block with-errors hidden"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary modalSubmit">Save changes</button>
-                        <button type="button" class="btn btn-primary addNewExcerciseButton">+</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close margin-right-5" />Close</button>
+                        <button type="submit" class="btn btn-gym"><i class="fa fa-check margin-right-5 modalSubmit" />Save changes</button>
+                        <button type="button" class="btn btn-gym addNewExcerciseButton toLeft"><i class="fa fa-plus fa-lg " /></button>
                     </div>
                 </form>
             </div> <!-- /.modal-content -->

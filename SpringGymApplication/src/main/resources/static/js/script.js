@@ -5,7 +5,10 @@ var trainingHandler = (function(){
         keyboard: true,
         show: true,
     };
+    var eventColors = { DONE : "#62be12", FAIL : "#be2b0b", IN_PROGRESS : "#ffff00"};
     var deletedExcercises = [];
+    my.callEvents = [];
+
     function convertDateToInputDate(date){
         var convertedDate = "";
         var mydate = new Date(date);
@@ -21,6 +24,7 @@ var trainingHandler = (function(){
 
         return convertedDate;
     }
+
 
     function showModal(name) {
         $('#' + name).modal(modalOptions);
@@ -39,8 +43,25 @@ var trainingHandler = (function(){
         }
         else{
             $('#statusInput').val("IN_PROGRESS");
-
         }
+    }
+    my.statusChanged = function () {
+        $(".statusInput").change(function () {
+            $span = $(this).prev();
+            if($(this).val() == "DONE"){
+                $("i", $span).removeClass();
+                $("i", $span).addClass("fa fa-thumbs-up");
+            }
+            if($(this).val() == "IN_PROGRESS"){
+                $("i", $span).removeClass();
+                $("i", $span).addClass("fa fa-hand-rock-o");
+            }
+            if($(this).val() == "FAILED"){
+                $("i", $span).removeClass();
+                $("i", $span).addClass("fa fa-thumbs-down");
+            }
+
+        });
     }
     function refreshForm(formName){
         $("#" + formName + " > div.excercise").not(":first").each(function () {
@@ -50,12 +71,20 @@ var trainingHandler = (function(){
         $(".modal-body .form-group .seriesInput", $firstExcercieForm).val(4);
         $(".modal-body .form-group .repeatsInput", $firstExcercieForm).val(8);
         $(".modal-body .form-group .weightInput", $firstExcercieForm).val(20);
-        $(".modal-body .form-group .seriesInput", $firstExcercieForm).trigger("change");
-        $(".help-block").text("");
+        if(formName == "addTrainingForm") {
+            $(".modal-body .form-group .seriesInput", $firstExcercieForm).trigger("change");
+        }
+        resetErrors();
 
     }
+    function resetErrors(){
+        $(".help-block").text("").addClass("hidden");
+    }
 
-    function removeWeightInputs(typeForm, nodeElement) {
+    function removeWeightInputs( nodeElement) {
+        //$(".weightInput").first().parent().addClass("hidden");
+        //$(".weightInput").not(":first").parent().remove();
+        //var $weightinputParent =  $("#" + typeForm + " .modal-body>div.form-group input.weightInput").not(":eq(0)").parent().css("background","red").remove();
         var $weightinputParent =  $(" input.weightInput", nodeElement).not(":eq(0)").parent().remove();
     }
     function addAllTrainingsToUpdateForm(events) {
@@ -66,16 +95,14 @@ var trainingHandler = (function(){
         for(ev in events){
             addSingleTrainig(events[ev]);
         }
-        $("#updateTrainingForm > div:nth-child(3)").hide();
+        $("#updateTrainingForm > div:nth-child(2)").hide();
     }
 
     function addSingleTrainig(singleEvent){
-        alert("wewnatrz addSignleTrainig");
-        $modalExcerciseForm = $("#updateTrainingForm > div:nth-child(3)").clone(true,true);
+        $modalExcerciseForm = $("#updateTrainingForm > div:nth-child(2)").clone(true,true);
         $newModalForm = $modalExcerciseForm.clone(true,true);
         $newModalForm.show();
         $('.modal-body', $newModalForm).hide();
-        $('.slideButton', $newModalForm).text("+");
         $('.idInput', $newModalForm).val(singleEvent.id);
         $('.excerciseInput', $newModalForm).val(singleEvent.excercise);
         $('.seriesInput', $newModalForm).val(singleEvent.series);
@@ -92,6 +119,7 @@ var trainingHandler = (function(){
                 var $clonedWeightInput = $weightInput.clone(true, true);
                 $("input", $clonedWeightInput).val(weightArray[singleWeight]);
                 $clonedWeightInput.insertAfter($weightInput);
+
             }
         }
 
@@ -100,7 +128,32 @@ var trainingHandler = (function(){
         $newModalForm.insertBefore(".modal-footer");
 
     };
+     function addIconsToEvents() {
+        $(".icon-done").each(function () {
+            $content = $(".fc-content",this);
+            jQuery('<i/>', {
+                class: 'fa fa-thumbs-up fa-5x icon-fa-done',
+            }).appendTo($content);
+        })
+        $(".icon-fail").each(function () {
+            $content = $(".fc-content",this);
+            jQuery('<i/>', {
+                class: 'fa fa-thumbs-down fa-5x icon-fa-fail',
+            }).appendTo($content);
+        })
+        $(".icon-inProgress").each(function () {
+            $content = $(".fc-content",this);
+            jQuery('<i/>', {
+                class: 'fa fa-hand-rock-o fa-5x icon-fa-inProgress',
+            }).appendTo($content);
+        })
+    }
 
+    my.addIconsReloadToFCButtons = function () {
+        $(".fc-button").click( function () {
+            addIconsToEvents();
+        });
+    };
     my.convertDateToInputDate = function (date) {
         convertDateToInputDate(date);
     };
@@ -163,11 +216,40 @@ var trainingHandler = (function(){
             singleEvent.start = convertDateToInputDate(new Date(elem[ev].date));
             singleEvent.training = elem[ev].training;
             singleEvent.title = "";
+            singleEvent.color = setSingleEventColor(elem[ev]);
+            singleEvent.className = setSingleEventClass(elem[ev]);
             events.push(singleEvent);
         }
+
         return events;
     }
-    my.callEvents = [];
+    function setSingleEventColor(element){
+        var color = "";
+        if(element.training[0].status == "DONE") {
+            color = eventColors["DONE"];
+        }
+        if(element.training[0].status == "FAILED") {
+            color = eventColors["FAIL"];
+        }
+        if(element.training[0].status == "IN_PROGRESS") {
+            color = eventColors["IN_PROGRESS"];
+        }
+        return color;
+    }
+    function setSingleEventClass(element){
+        var eventClass = "";
+        if(element.training[0].status == "DONE") {
+            eventClass = "icon-done";
+        }
+        if(element.training[0].status == "FAILED") {
+            eventClass = "icon-fail";
+        }
+        if(element.training[0].status == "IN_PROGRESS") {
+            eventClass = "icon-inProgress";
+        }
+        return eventClass;
+    }
+
 
     function addTrainings() {
         $.ajax({
@@ -180,6 +262,7 @@ var trainingHandler = (function(){
                 var callendarEvents = callEvents.concat(getCallendarEvents(events));
                 callEvents = callendarEvents;
                 reloadCallendarEvents(callEvents);
+                addIconsToEvents();
                 alert("succes");
             },
             error: function(data) {
@@ -190,11 +273,14 @@ var trainingHandler = (function(){
     };
 
     function handleFormErrors(errors,formType) {
+        resetErrors();
         var myErrors = errors.fieldErrors;
         for(error in myErrors){
             var parsedError = parseErrorField(myErrors[error], formType);
             handleFieldError(parsedError, formType);
         }
+        console.log(myErrors);
+
     }
 
     function parseErrorField(unparsedError,formType) {
@@ -209,25 +295,26 @@ var trainingHandler = (function(){
         }
         else{
             listElement = testRE[1];
-            field = "status";
+            field = "global";
         }
         if(formType == "updateTrainingForm"){
             listElement =  parseInt(listElement) + 1;
         }
         return {listIndex : listElement, field : field, message : unparsedError.message};
     }
+
     function handleFieldError(fieldError, formType){
+        console.log(fieldError);
         var $excerciseId = $("#"+ formType +">div.excercise").eq(fieldError.listIndex);
         var inputId = "." + fieldError.field + "Input";
-        if(fieldError.field == "status"){
-            $(inputId, "#"+ formType).next().text(fieldError.message);
-
+        if(fieldError.field == "global"){
+            $("#"+ formType+">div.row>div").last().children(".with-errors").text(fieldError.message).removeClass("hidden");
         }
         else if(fieldError.field == "weight"){
-            $(inputId, $excerciseId).parent().last().text(fieldError.message);
+            $(inputId, $excerciseId).parent().next(".with-errors").text(fieldError.message).removeClass("hidden");
         }
         else {
-            $(inputId, $excerciseId).next().text(fieldError.message);
+            $(inputId, $excerciseId).parent().next().text(fieldError.message).removeClass("hidden");
         }
     }
     function deleteEventsFromCallendarEvents(){
@@ -236,7 +323,6 @@ var trainingHandler = (function(){
                 for(k in deletedExcercises){
                     if(callEvents[i].training[j].id == deletedExcercises[k]){
                         callEvents[i].training.splice(j, 1);
-                        break;
                     }
                 }
 
@@ -254,9 +340,11 @@ var trainingHandler = (function(){
             success: function(data){
                 deleteTrainings();
                 var events = getEvents(groupByDate(data));
-                var callendarEvents = callEvents.concat(getCallendarEvents(events));
-                callEvents = callendarEvents;
+                var newCallendarEvents = (getCallendarEvents(events));
+
+                callEvents = addUpdatedEventsAndRemoveDoubled(newCallendarEvents);
                 reloadCallendarEvents(callEvents);
+                addIconsToEvents();
                 alert("sukces");
             },
             error: function(data){
@@ -265,6 +353,24 @@ var trainingHandler = (function(){
                }
         });
 
+    }
+    function addUpdatedEventsAndRemoveDoubled(newEvents) {
+        var newCallEvents = callEvents;
+        for(i in newEvents){
+            var changedAllTraining = true;
+            for(j in newCallEvents){
+                if(newCallEvents[j].start == newEvents[i].start){
+                    changedAllTraining = false;
+                    if(newCallEvents[j].training.length < newEvents[i].training.length){
+                        newCallEvents[j].training = newEvents[i].training;
+                    }
+                }
+            }
+            if(changedAllTraining == true){
+                newCallEvents.add(newEvents[i]);
+            }
+        }
+        return newCallEvents;
     }
 
     function deleteTrainings(){
@@ -276,6 +382,7 @@ var trainingHandler = (function(){
             success: function(data){
                 deleteEventsFromCallendarEvents();
                 reloadCallendarEvents(callEvents);
+                addIconsToEvents();
                 alert("sukces");},
             error: function(data){
                 alert("fail");
@@ -316,6 +423,7 @@ var trainingHandler = (function(){
         $("#" + typeForm +" .modal-body").each(function () {
             trainings.push( getExcerciseDataFromInput(this, typeForm));
         });
+        console.log(trainings);
         return trainings;
     }
 
@@ -330,7 +438,8 @@ var trainingHandler = (function(){
     function setExcerciseTittleFromSelectInput(){
         $(".excerciseInput").change(function () {
             $that = $(this);
-            $(this).parent().parent().parent().children("span").text($that.val());
+            var $form = $(this).parent().parent().parent();
+            $("h3",$form).text($that.val());
         })
     }
 
@@ -341,7 +450,17 @@ var trainingHandler = (function(){
             url: "/getStatusEnum?${_csrf.parameterName}=${_csrf.token}",
             success: function(data){
                 for (var i=0;i<data.length;i++){
-                    $('<option/>').val(data[i]).html(data[i]).appendTo('.statusInput');
+                    var $option = $('<option/>').val(data[i]).html(data[i]).appendTo('.statusInput');
+
+                    if(data[i] == "FAILED"){
+                        $('<i/>').addClass("fa fa-thumbs-down toLeft margin-right-5").appendTo($option);
+                    }
+                    if(data[i] == "IN_PROGRESS"){
+                        $('<i/>').addClass("fa fa-hand-rock-o toLeft  margin-right-5").appendTo($option);
+                    }
+                    if(data[i] == "DONE"){
+                        $('<i/>').addClass("fa fa-thumbs-up toLeft  margin-right-5").appendTo($option);
+                    }
                 }
             },
             error: function(data){ console.log(data);}
@@ -366,18 +485,18 @@ var trainingHandler = (function(){
 
     my.deleteExcercise = function () {
         $(".deleteButton").click(function () {
-           $(this).parent().remove();
+           $(this).parent().parent().parent().remove();
         });
 
     };
 
     my.deleteUpdatedExcercise = function () {
         $(".deleteUpdateButton").click(function () {
-            var $parent = $(this).parent();
+            var $parent = $(this).parent().parent().parent();
             var $firstGroup = $("div.modal-body .form-group",$parent).eq(0);
             var id = $("input", $firstGroup).val();
             deletedExcercises.push(id);
-            $(this).parent().remove();
+            $(this).parent().parent().parent().remove();
         });
 
     };
@@ -400,40 +519,34 @@ var trainingHandler = (function(){
 
     };
 
-    my.toggleExcercise = function(){
-        $(".modal-body-header").click(function () {
-            $(this).next().toggle(function () {
-                    $(this).next().slideUp(500);
-
-                },
-                function () {
-                    $(this).next().slideDown(500);
-                });
-        })
-    };
     my.toggleExcercise2 = function(){
         $(".slideButton").click(function () {
             var $that = $(this);
 
-            $(this).next().toggle(function ($that) {
-                    $(this).next().slideUp(500);
-                    $that.text("-");
+            $(this).parent().parent().next().toggle(function () {
+                    $(this).parent().parent().next().show(500);
+                    // $(".fa", $that).addClass("fa-angle-down");
+                    // $(".fa", $that).removeClass("fa-angle-up");
+                    $(".slideButton .fa").removeClass("fa-angle-up");
+                    $(".slideButton .fa").addClass("fa-angle-down");
 
                 },
                 function () {
-                    $(this).next().slideDown(500);
-                    $(this).prev().text("+");
+                    $(this).parent().parent().next().hide(500);
+                    //var $button = $(this).prev();
+                    $(".slideButton .fa").removeClass("fa-angle-down");
+                    $(".slideButton .fa").addClass("fa-angle-up");
                 });
         })
     };
     my.addNewExcerciseSchema = function(){
-        $modalForm = $("#addTrainingForm > div:nth-child(3)").clone(true,true);
+        $modalForm = $("#addTrainingForm > div:nth-child(2)").clone(true,true);
         $(".addNewExcerciseButton").click(function(e){
             $newModalForm = $modalForm.clone(true,true);
             $(".modal-body input", $newModalForm).each(function(){
                 $(this).val("");
             });
-            $(".modal-body-header", $newModalForm).text("NewExcercise");
+            $(".modal-body-header", $newModalForm).text("New Excercise");
             $newModalForm.addClass("topLine");
             $newModalForm.insertBefore(".modal-footer");
         })
@@ -457,16 +570,41 @@ var trainingHandler = (function(){
                 var callendarEvents = getCallendarEvents(ev);
                 callEvents = callendarEvents;
                 reloadCallendarEvents(callEvents);
+                addIconsToEvents();
 
             },
             error: function(data){ console.log(data);}
         });
     };
 
+    function addColorToEvent(event, status){};
+    if(status=="IN_PROGRESS"){
+        $(event).addClass("bg-inProgress");
+    }
+    if(status=="DONE"){
+        $(event).addClass("bg-done");
+    }
+    if(status=="FAIL"){
+        $(event).addClass("bg-fail");
+    }
+
+    function addColorToAllEvents(mEvents) {
+        for(i in mEvents){
+
+        }
+
+    }
+
+    my.deleteDefaultDayNumberClickEvent = function(){
+        //$(".fc-day-number").css("background", "edr");
+    };
+
     my.addWeightInputsToForm = function(){
         $(".seriesInput").change(function () {
+            //poprawic funkcje remove weightinputs i clone weight inputs
+
             var $parent = $(this).parent().parent();
-            removeWeightInputs("addTrainingForm", $parent);
+            removeWeightInputs($parent);
             var count = $(this).val();
             var $weightinput =  $("input.weightInput", $parent).eq(0).parent().removeClass("hidden");
             for(var i = count; i>=2; i--) {

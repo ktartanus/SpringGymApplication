@@ -29,12 +29,12 @@ $(document).ready(function() {
      trainingHandler.updateDataCallendarEvents();
      trainingHandler.saveTraining();
      trainingHandler.updateTraining();
-     trainingHandler.toggleExcercise();
      trainingHandler.toggleExcercise2();
      trainingHandler.deleteExcercise();
      trainingHandler.deleteUpdatedExcercise();
      trainingHandler.addNewExcerciseSchema();
-
+     trainingHandler.addIconsReloadToFCButtons();
+     trainingHandler.statusChanged();
 });
 
 

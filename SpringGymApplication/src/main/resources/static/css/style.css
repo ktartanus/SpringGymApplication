@@ -133,7 +133,7 @@ header .intro-text .skills {
 }
 @media (min-width: 768px) {
     header .container {
-        padding-top: 200px;
+        padding-top: 150px;
         padding-bottom: 100px;
     }
     header .intro-text .name {
@@ -236,4 +236,164 @@ footer .footer-below {
     padding: 25px 0;
     background-color: #cccccc;
     color:white;
+}
+
+.topLine {
+    border-top: 1px solid #e5e5e5;
+}
+.hidden {
+    display:none;
+}
+
+.fc-content {
+    height: 110px;
+    border-radius:5px;
+}
+
+#chartdiv{
+    width:100%;
+    min-height: 500px;
+}
+.info{
+    float:left;
+    border: 1px solid white;
+    solid : 5px;
+}
+.fa-info-circle{
+    float: right;
+}
+.margin-right-10{
+    margin-right: 10px;
+}
+.margin-left-10{
+    margin-left: 10px;
+}
+.margin-top-10{
+     margin-top:10px;
+}
+.margin-top-15{
+    margin-top:15px;
+}
+.margin-right-15{
+    margin-right:15px;
+}
+.margin-right-5{
+    margin-right:5px;
+}
+.margin-top-5{
+    margin-top:5px;
+}
+.padd-top-120{
+    padding-top:120px !important;
+}
+
+.margin-right-20{
+    margin-right:20px;
+}
+.margin-left-20{
+    margin-left:20px;
+}
+
+.input-group-addon {
+    min-width:42px;
+}
+.modalInfo{
+    position:absolute;
+    z-index : 100;
+    background-color: #fff;
+    color: #888;
+    text-align:left;
+    padding:10px;
+}
+.infoContent{
+    font-size: 1.3rem;
+    padding-left:60px;
+    text-align:left;
+}
+.calculatorResult{
+    font-size:3rem;
+}
+.width-35p{
+    width:25%;
+}
+
+.toLeft{
+    float:left;
+}
+.toRight{
+    float:right;
+}
+.statisticsInput{
+    width:50%;
+}
+
+#statisticsModalInfo{
+    top:42px;
+    left:36px;
+}
+/*index.html*/
+.excerciseFormTitle{
+    margin-top:4px;
+    margin-bottom:4px;
+    padding-left:10px;
+}
+.btn-gym{
+    background-color: #423c3c;
+    border-color: #787272;
+    color: white;
+}
+
+.btn-gym:hover,
+.btn-gym:focus,
+.btn-gym.focus,
+.btn-gym:active,
+.btn-gym.active {
+    background-color: #787272;
+}
+.bg-done{
+    background-color: #62be12;
+}
+.bg-fail{
+    background-color: #be2b0b;
+}
+.bg-inProgress{
+    background-color: #ffff00;
+}
+
+.icon-fa-done{
+    position: absolute;
+    left: 30%;
+    opacity: 0.5;
+    top: 20%;
+}
+.icon-fa-fail{
+    position: absolute;
+    left: 30%;
+    top: 20%;
+    opacity: 0.5;
+}
+.icon-fa-inProgress{
+    position: absolute;
+    left: 30%;
+    top: 20%;
+    opacity: 0.7;
+}
+
+.fc-today{
+    color: #423c3c;
+}
+.statusInput>option{
+    color:#423c3c;
+    font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: larger;
+}
+.with-errors{
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    padding: 15px;
 }

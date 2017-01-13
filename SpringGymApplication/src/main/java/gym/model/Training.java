@@ -7,11 +7,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by Tarti on 2016-12-29.
- */
-
-
 @Entity
 @Table(name = "TRAINING")
 public class Training implements Serializable{
@@ -37,12 +32,16 @@ public class Training implements Serializable{
     @Column(name = "REPEATS")
     private Integer repeats;
 
-    @Column(name ="TRAINING_DATE")
-    private Date training_date;
+    @Column(name = "WEIGHT")
+    private String weight;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Column(name ="TRAINING_DATE")
+    private Date trainingDate;
+
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_TO_TRAINING_ID")
     private User user;
+
 
     public TrainingStatus getStatus() { return status; }
 
@@ -80,12 +79,20 @@ public class Training implements Serializable{
         this.repeats = repeats;
     }
 
-    public Date getTraining_date() {
-        return training_date;
+    public String getWeight() {
+        return weight;
     }
 
-    public void setTraining_date(Date training_date) {
-        this.training_date = training_date;
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public Date getTrainingDate() {
+        return trainingDate;
+    }
+
+    public void setTrainingDate(Date trainingDate) {
+        this.trainingDate = trainingDate;
     }
 
     public User getUser() {

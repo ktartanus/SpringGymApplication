@@ -12,14 +12,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({ TYPE, ANNOTATION_TYPE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = VStatusValidator.class)
+@Constraint(validatedBy = VDuplicateExcerciseValidator.class)
 @Documented
-public @interface VStatus {
+public @interface VDuplicateExcercise {
 
-    String message() default "Invalid VStatus";
+    String message() default "Invalid VExcercise";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 }
-

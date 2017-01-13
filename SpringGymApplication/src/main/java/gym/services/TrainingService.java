@@ -8,27 +8,29 @@ import gym.model.User;
 import gym.model.enums.Excercise;
 import gym.model.enums.TrainingStatus;
 import gym.utlis.DateUtil;
+import gym.utlis.EnumConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
-/**
- * Created by Tarti on 2016-12-29.
- */
 
 @Service
 public class TrainingService implements ITrainingService {
 
-    @Autowired
     private IUserService userService;
 
-    @Autowired
     private TrainingRepository trainingRepository;
 
+    @Autowired
+    public TrainingService(IUserService userService, TrainingRepository trainingRepository){
+        this.userService = userService;
+        this.trainingRepository = trainingRepository;
+    }
+
     public Training addTraining(TrainingDTO trainingDTO){
-        System.out.println("wenatrz addTraining w TrainingService");
         User loggedUser = userService.getLoggedUser();
 
         Training newTraining = createTraining(trainingDTO, loggedUser);
@@ -37,9 +39,9 @@ public class TrainingService implements ITrainingService {
         return newTraining;
     }
 
-    public ValidListDTO <TrainingDTO> getTrainings(){
+    public List<TrainingDTO> getTrainings(){
         User loggedUser = userService.getLoggedUser();
-        ValidListDTO<TrainingDTO> trainingListDTO = new ValidListDTO<TrainingDTO>();
+        List<TrainingDTO> trainingListDTO = new ArrayList<>();
         List<Training> trainingList= trainingRepository.findByUser(loggedUser);
         for(Training training : trainingList){
              TrainingDTO trainingDTO = createTrainingDTO(training);
@@ -49,15 +51,66 @@ public class TrainingService implements ITrainingService {
         return trainingListDTO;
     }
 
-    private TrainingDTO createTrainingDTO(Training training){
-        Date converted_Date = DateUtil.removeTime(training.getTraining_date());
+    public List<TrainingDTO> addTrainings(ValidListDTO<TrainingDTO> validListDTO){
+        User loggedUser = userService.getLoggedUser();
+        List<TrainingDTO> trainingDTOList = new ArrayList<>();
 
+        for(TrainingDTO trainingDTO : validListDTO){
+            Training newTraining = createTraining(trainingDTO, loggedUser);
+            newTraining = trainingRepository.save(newTraining);
+            TrainingDTO newTrainingDTO = createTrainingDTO(newTraining);
+            trainingDTOList.add(newTrainingDTO);
+        }
+        return trainingDTOList;
+    }
+
+    public void deleteTrainings(List<Long> ids) {
+        User loggedUser = userService.getLoggedUser();
+        for(Long id : ids){
+            Training training = trainingRepository.findOne(id);
+            if(training!= null && training.getUser() == loggedUser) {
+                trainingRepository.deleteByTrainingId(id);
+            }
+        }
+    }
+
+    public List<TrainingDTO> updateTrainings(ValidListDTO<TrainingDTO> validListDTO) {
+        User loggedUser = userService.getLoggedUser();
+        List<TrainingDTO> trainingDTOList = new ArrayList<>();
+
+        for(TrainingDTO trainingDTO : validListDTO){
+            Training updatedTraining = updateTraining(trainingDTO, loggedUser);
+            Training savedUpdatedTrainig;
+            TrainingDTO savedUpdatedTrainigDTO;
+            savedUpdatedTrainig = trainingRepository.save(updatedTraining);
+            savedUpdatedTrainigDTO = createTrainingDTO(savedUpdatedTrainig);
+            trainingDTOList.add(savedUpdatedTrainigDTO);
+        }
+        return trainingDTOList;
+    }
+
+    public List<TrainingStatus> getTrainngStatuses(){
+        List<TrainingStatus> trainingStatuses = new ArrayList<>(Arrays.asList(TrainingStatus.values()));
+
+        return trainingStatuses;
+    }
+
+    public List<Excercise> getTrainngExcercises(){
+        List<Excercise> trainingExcercises = new ArrayList<>(Arrays.asList(Excercise.values()));
+
+        return trainingExcercises;
+    }
+
+    private TrainingDTO createTrainingDTO(Training training){
+        Date converted_Date = DateUtil.removeTime(training.getTrainingDate());
         TrainingDTO newTrainingDTO = new TrainingDTO();
+        newTrainingDTO.setId(training.getTrainingId());
         newTrainingDTO.setExcercise(training.getExcercise().name());
         newTrainingDTO.setRepeats(training.getRepeats());
         newTrainingDTO.setStatus(training.getStatus().name());
         newTrainingDTO.setDate(converted_Date);
         newTrainingDTO.setSeries(training.getSeries_number());
+        newTrainingDTO.setWeight(training.getWeight());
 
         return newTrainingDTO;
     }
@@ -69,10 +122,27 @@ public class TrainingService implements ITrainingService {
         newTraining.setExcercise(Excercise.valueOf(trainingDTO.getExcercise()));
         newTraining.setRepeats(trainingDTO.getRepeats());
         newTraining.setSeries_number(trainingDTO.getSeries());
-        newTraining.setTraining_date(trainingDTO.getDate());
+        newTraining.setTrainingDate(DateUtil.removeTime(trainingDTO.getDate()));
         newTraining.setStatus(TrainingStatus.valueOf(trainingDTO.getStatus()));
+        newTraining.setWeight(trainingDTO.getWeight());
 
         return newTraining;
     }
+
+    private Training updateTraining(TrainingDTO trainingDTO, User loggedUser){
+
+        Training newTraining = new Training();
+        newTraining.setTrainingId(trainingDTO.getId());
+        newTraining.setUser(loggedUser);
+        newTraining.setExcercise(Excercise.valueOf(trainingDTO.getExcercise()));
+        newTraining.setRepeats(trainingDTO.getRepeats());
+        newTraining.setSeries_number(trainingDTO.getSeries());
+        newTraining.setTrainingDate(trainingDTO.getDate());
+        newTraining.setStatus(TrainingStatus.valueOf(trainingDTO.getStatus()));
+        newTraining.setWeight(trainingDTO.getWeight());
+
+        return newTraining;
+    }
+
 
 }

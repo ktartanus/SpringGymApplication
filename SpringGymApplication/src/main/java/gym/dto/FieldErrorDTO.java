@@ -1,8 +1,5 @@
 package gym.dto;
 
-/**
- * Created by Tarti on 2016-12-28.
- */
 public class FieldErrorDTO {
 
     private String field;

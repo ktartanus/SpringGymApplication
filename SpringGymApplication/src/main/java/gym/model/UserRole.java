@@ -17,7 +17,7 @@ public class UserRole {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_TO_ROLE_ID")
 	private User user;
 

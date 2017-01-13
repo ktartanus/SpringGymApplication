@@ -1,8 +1,5 @@
 package gym.dto;
 
-/**
- * Created by Tarti on 2016-12-30.
- */
 public class GlobalErrorDTO {
 
     private String annotation;

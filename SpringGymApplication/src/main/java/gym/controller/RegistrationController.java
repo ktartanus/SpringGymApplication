@@ -11,11 +11,9 @@ package gym.controller;
         import org.springframework.stereotype.Controller;
         import org.springframework.ui.Model;
         import org.springframework.validation.BindingResult;
-        import org.springframework.validation.Errors;
         import org.springframework.web.bind.annotation.ModelAttribute;
         import org.springframework.web.bind.annotation.RequestMapping;
         import org.springframework.web.bind.annotation.RequestMethod;
-        import org.springframework.web.context.request.WebRequest;
         import org.springframework.web.servlet.ModelAndView;
 
 
@@ -26,7 +24,7 @@ public class RegistrationController {
     private IUserService service;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String newRegistration(WebRequest request, Model model) {
+    public String newRegistration( Model model) {
         RegistrationDTO registrationDTO = new RegistrationDTO();
         model.addAttribute("registrationDTO", registrationDTO);
         return "registrationForm";
@@ -35,9 +33,7 @@ public class RegistrationController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView registerUserAccount(
             @ModelAttribute("registrationDTO") @Valid RegistrationDTO registrationDTO,
-            BindingResult result,
-            WebRequest request,
-            Errors errors) {
+            BindingResult result) {
 
         User registered = new User();
         if (!result.hasErrors()) {

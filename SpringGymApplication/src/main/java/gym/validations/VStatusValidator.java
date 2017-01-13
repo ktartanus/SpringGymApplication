@@ -8,9 +8,6 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Date;
 
-/**
- * Created by Tarti on 2016-12-30.
- */
 public class VStatusValidator implements ConstraintValidator<VStatus, Object> {
 
 
@@ -28,16 +25,12 @@ public class VStatusValidator implements ConstraintValidator<VStatus, Object> {
         }
         TrainingStatus trainingStatus = TrainingStatus.valueOf(training.getStatus());
 
-
         Date trainingDate = DateUtil.removeTime(training.getDate());
         Date actualDate = DateUtil.removeTime(new Date());
-        System.out.println(actualDate);
-        System.out.println(trainingDate);
 
-        if(trainingDate.before(actualDate) && trainingStatus == TrainingStatus.IN_PROGRESS) {
+        if(trainingDate.getTime()<actualDate.getTime() && trainingStatus == TrainingStatus.IN_PROGRESS) {
             return false;
         }
-
         return true;
     }
 

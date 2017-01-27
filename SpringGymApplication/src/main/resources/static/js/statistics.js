@@ -86,8 +86,6 @@ $(document).ready(function() {
     $("#statisticsInfo").mouseover(function () {
         $("#statisticsModalInfo").removeClass("hidden")
         var width = $(this).css(width);
-        alert(width);
-        console.log(width);
     });
     $("#statisticsInfo").mouseout(function () {
         $("#statisticsModalInfo").addClass("hidden")

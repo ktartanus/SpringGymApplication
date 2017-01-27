@@ -279,8 +279,6 @@ var trainingHandler = (function(){
             var parsedError = parseErrorField(myErrors[error], formType);
             handleFieldError(parsedError, formType);
         }
-        console.log(myErrors);
-
     }
 
     function parseErrorField(unparsedError,formType) {
@@ -304,7 +302,6 @@ var trainingHandler = (function(){
     }
 
     function handleFieldError(fieldError, formType){
-        console.log(fieldError);
         var $excerciseId = $("#"+ formType +">div.excercise").eq(fieldError.listIndex);
         var inputId = "." + fieldError.field + "Input";
         if(fieldError.field == "global"){
@@ -383,10 +380,10 @@ var trainingHandler = (function(){
                 deleteEventsFromCallendarEvents();
                 reloadCallendarEvents(callEvents);
                 addIconsToEvents();
-                alert("sukces");},
+                alert("succes");},
             error: function(data){
                 alert("fail");
-                console.log(data);}
+               }
         });
     }
 
@@ -423,7 +420,6 @@ var trainingHandler = (function(){
         $("#" + typeForm +" .modal-body").each(function () {
             trainings.push( getExcerciseDataFromInput(this, typeForm));
         });
-        console.log(trainings);
         return trainings;
     }
 
